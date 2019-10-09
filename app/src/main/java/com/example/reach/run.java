@@ -11,12 +11,14 @@ public class run {
     private Date e = new Date();
     private String l;
     private  ArrayList<Date> f = new ArrayList<Date>();
+    private  String p;
 
     private DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SS");
 
-    public run (String name, String[] checkpoints, String location, String estimate) {
+    public run (String name, String[] checkpoints, String location, String estimate, String picPath) {
         n = name;
         l = location;
+        p = picPath;
 
         for (String s : checkpoints) {
             c.add(s);
@@ -29,7 +31,7 @@ public class run {
         }
     }
 
-    public String getName () {
+    public String getName() {
         return n;
     }
 
@@ -47,6 +49,10 @@ public class run {
 
     public String getLocation() {
         return l;
+    }
+
+    public String GetPicPath() {
+        return p;
     }
 
     public Boolean addFinishTime(String FinishTime) {
