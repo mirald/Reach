@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.NFC" />
 
-    <!--Only phones will NFC will be able to download the app form the play store -->
+    <!--Only phones with NFC will be able to download the app form the play store -->
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
@@ -22,9 +22,8 @@
             android:label="@string/title_activity_nfc_activity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity

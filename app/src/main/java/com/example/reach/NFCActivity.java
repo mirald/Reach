@@ -1,7 +1,9 @@
 package com.example.reach;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.NdefMessage;
+import android.nfc.Tag;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 
@@ -27,6 +29,8 @@ public class NFCActivity extends AppCompatActivity {
 
     private TextView textView;
     private NfcAdapter nfcAdapter;
+    private PendingIntent pendingIntent;
+    StringBuilder tagSerialNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +53,48 @@ public class NFCActivity extends AppCompatActivity {
             Toast.makeText(this, "Turn on NFC to use this function",
                     Toast.LENGTH_SHORT).show();
         } else{
-            onNewIntent(getIntent());
+            Toast.makeText(this, "NFC scanned",
+                    Toast.LENGTH_SHORT).show();
+            pendingIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         }
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(nfcAdapter != null){
+            nfcAdapter.disableForegroundDispatch(this);
+        }
     }
 
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
 
-        if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())){
-            Parcelable[] nfcMessages =
-                    intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            if(nfcMessages != null){
-                NdefMessage[] messages = new NdefMessage[nfcMessages.length];
-                for(int i = 0; i<nfcMessages.length;i++){
-                    messages[i] = (NdefMessage) nfcMessages[i];
-                    System.out.println(messages);
-                }
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        byte[] tagID = tag.getId();
 
+        tagSerialNumber = new StringBuilder();
+
+        for (byte hexByte : tagID) {
+            String s = Integer.toHexString(((int) hexByte & 0xff));
+            if (s.length() == 1){
+                s= '0' + s;
             }
+            tagSerialNumber.append(s).append(' ');
         }
+
+        Log.d(TAG, "Byte array: " + tagSerialNumber);
+
     }
 
 }

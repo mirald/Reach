@@ -1,4 +1,4 @@
 package com.example.reach;
 
-public class NFCreader {
+public class NFCTag {
 }
