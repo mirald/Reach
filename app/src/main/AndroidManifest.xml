@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.erikh.reach">
 
+    <uses-permission android:name="android.permission.NFC" />
+
+    <!--Only phones will NFC will be able to download the app form the play store -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name="com.example.reach.NFC_activity"
+            android:name="com.example.reach.NFCActivity"
             android:label="@string/title_activity_nfc_activity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
