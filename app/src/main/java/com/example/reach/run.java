@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class run {
     private String n;
-    private ArrayList<String> c = new ArrayList<String>();
+    private ArrayList<checkpoint> c = new ArrayList<checkpoint>();
     private Date e = new Date();
     private String l;
     private  ArrayList<Date> f = new ArrayList<Date>();
@@ -15,14 +15,10 @@ public class run {
 
     private DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SS");
 
-    public run (String name, String[] checkpoints, String location, String estimate, String picPath) {
+    public run (String name, String location, String estimate, String picPath) {
         n = name;
         l = location;
         p = picPath;
-
-        for (String s : checkpoints) {
-            c.add(s);
-        }
 
         try {
             e = formatter.parse(estimate);
@@ -35,7 +31,7 @@ public class run {
         return n;
     }
 
-    public ArrayList<String> getCheckpoints() {
+    public ArrayList<checkpoint> getCheckpoints() {
         return c;
     }
 
@@ -77,5 +73,18 @@ public class run {
             returnList.add(d.toString());
         }
         return returnList;
+    }
+
+    public Boolean addNewCheckpoint(String name, float x, float y) {
+        try {
+            c.add(new checkpoint(name, x, y));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void addCheckpoint(checkpoint checkpoint) {
+        c.add(checkpoint);
     }
 }
