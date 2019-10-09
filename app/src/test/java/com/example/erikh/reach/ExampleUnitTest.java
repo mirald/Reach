@@ -1,4 +1,4 @@
-package com.example.reach;
+package com.example.erikh.reach;
 
 import org.junit.Test;
 
