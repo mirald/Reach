@@ -7,15 +7,10 @@ import android.nfc.Tag;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Parcelable;
 import android.util.Log;
-import android.view.View;
 
 import com.example.erikh.reach.R;
 
@@ -53,8 +48,6 @@ public class NFCActivity extends AppCompatActivity {
             Toast.makeText(this, "Turn on NFC to use this function",
                     Toast.LENGTH_SHORT).show();
         } else{
-            Toast.makeText(this, "NFC scanned",
-                    Toast.LENGTH_SHORT).show();
             pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         }
@@ -94,6 +87,9 @@ public class NFCActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, "Byte array: " + tagSerialNumber);
+        Toast.makeText(this, "NFC scanned",
+                Toast.LENGTH_SHORT).show();
+        textView.setText(tagSerialNumber);
 
     }
 
