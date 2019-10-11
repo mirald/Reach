@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.run.RunActivity">
-            android:name="com.example.reach.NFCActivity"
-            android:label="@string/title_activity_nfc_activity"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
 
