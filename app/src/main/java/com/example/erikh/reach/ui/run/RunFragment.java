@@ -1,4 +1,4 @@
-package com.example.erikh.reach.ui.home;
+package com.example.erikh.reach.ui.run;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,21 +18,20 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.erikh.reach.MainActivity;
 import com.example.erikh.reach.R;
-import com.example.erikh.reach.ui.dashboard.DashboardFragment;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class RunFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private RunViewModel runViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        runViewModel =
+                ViewModelProviders.of(this).get(RunViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        runViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
@@ -58,9 +57,9 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(getActivity(), MainActivity.class);
+                Intent myIntent = new Intent(getActivity(), RunActivity.class);
                 //myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                HomeFragment.this.startActivity(myIntent);
+                RunFragment.this.startActivity(myIntent);
             }
         });
 
