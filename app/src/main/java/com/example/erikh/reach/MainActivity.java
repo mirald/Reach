@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
 public class MainActivity extends AppCompatActivity {
 
     RunList list;
@@ -19,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         list = RunList.getRunList();
-         list.addRun(new Run("Test Name", "Göteborg", "00:20:20:20", "test/test"));
+        list = RunList.getRunList();
+        list.addRun(new Run("Test Name", "Göteborg", "00:20:20:20", "test/test"));
         list.addRun(new Run("Gamer", "Göteborg", "00:20:20:20", "test/test"));
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
