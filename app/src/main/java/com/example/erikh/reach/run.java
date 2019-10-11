@@ -75,9 +75,9 @@ public class run {
         return returnList;
     }
 
-    public Boolean addNewCheckpoint(String name, float x, float y) {
+    public Boolean addNewCheckpoint(String name, float x, float y, String serialNumber) {
         try {
-            c.add(new checkpoint(name, x, y));
+            c.add(new checkpoint(name, x, y, serialNumber));
         } catch (Exception e) {
             return false;
         }

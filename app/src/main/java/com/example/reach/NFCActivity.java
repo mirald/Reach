@@ -2,9 +2,7 @@ package com.example.reach;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.nfc.NdefMessage;
 import android.nfc.Tag;
-import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
