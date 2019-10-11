@@ -19,9 +19,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         list = RunList.getRunList();
-         list.addRun(new Run("Inner City Run", "Göteborg", "00:30:20:20", "test/test"));
+        list = RunList.getRunList();
+        list.addRun(new Run("Inner City Run", "Göteborg", "00:30:20:20", "test/test"));
         list.addRun(new Run("The Erland", "Göteborg", "00:20:20:20", "test/test"));
+        list.addRun(new Run("Outer City Run", "Värmland", "12:20:00:20", "test/test"));
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
