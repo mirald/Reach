@@ -14,7 +14,7 @@ public class Run {
     private  ArrayList<Date> f = new ArrayList<Date>();
     private  String p;
 
-    private DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");
+    private DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
 
     public Run(String name, String location, String estimate, String picPath) {
         n = name;
@@ -49,7 +49,7 @@ public class Run {
 
         //If a run is actually 12 hours long, this will not work...
         String tempString = "";
-        if(!timeArray[0].equals("12") && !timeArray[0].equals("00")){
+        if(!timeArray[0].equals("00")){
             tempString += timeArray[0] + " hours ";
         }
         if(!timeArray[1].equals("00")){
