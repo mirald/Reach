@@ -5,17 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class run {
+public class Run {
     private String n;
-    private ArrayList<checkpoint> c = new ArrayList<checkpoint>();
+    private ArrayList<Checkpoint> c = new ArrayList<Checkpoint>();
     private Date e = new Date();
     private String l;
     private  ArrayList<Date> f = new ArrayList<Date>();
     private  String p;
 
-    private DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SS");
+    private DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");
 
-    public run (String name, String location, String estimate, String picPath) {
+    public Run(String name, String location, String estimate, String picPath) {
         n = name;
         l = location;
         p = picPath;
@@ -31,7 +31,7 @@ public class run {
         return n;
     }
 
-    public ArrayList<checkpoint> getCheckpoints() {
+    public ArrayList<Checkpoint> getCheckpoints() {
         return c;
     }
 
@@ -40,7 +40,7 @@ public class run {
     }
 
     public String getEstimateAsString() {
-        return e.toString();
+        return formatter.format(e).toString();
     }
 
     public String getLocation() {
@@ -70,21 +70,21 @@ public class run {
     public ArrayList<String> getFinishTimesAsStrings() {
         ArrayList<String> returnList = new ArrayList<String>();
         for (Date d: f) {
-            returnList.add(d.toString());
+            returnList.add(formatter.format(d.toString()));
         }
         return returnList;
     }
 
     public Boolean addNewCheckpoint(String name, float x, float y, String serialNumber) {
         try {
-            c.add(new checkpoint(name, x, y, serialNumber));
+            c.add(new Checkpoint(name, x, y, serialNumber));
         } catch (Exception e) {
             return false;
         }
         return true;
     }
 
-    public void addCheckpoint(checkpoint checkpoint) {
+    public void addCheckpoint(Checkpoint checkpoint) {
         c.add(checkpoint);
     }
 }
