@@ -1,12 +1,12 @@
 package com.example.erikh.reach;
 
-public class checkpoint {
+public class Checkpoint {
     private float x;
     private float y;
     private String n;
     private String s;
 
-    public checkpoint (String name, float xCordinate, float yCordinate, String serialNumber) {
+    public Checkpoint(String name, float xCordinate, float yCordinate, String serialNumber) {
         n = name;
         x = xCordinate;
         y = yCordinate;
