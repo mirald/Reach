@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.erikh.reach.ui.home.HomeFragment"
+        android:name="com.example.erikh.reach.ui.run.RunFragment"
         android:label="@string/title_run"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.erikh.reach.ui.dashboard.DashboardFragment"
+        android:name="com.example.erikh.reach.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_dashboard" />
 

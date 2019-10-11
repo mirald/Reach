@@ -1,6 +1,7 @@
-package com.example.reach;
+package com.example.erikh.reach.ui.run;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -15,10 +16,13 @@ import com.example.erikh.reach.R;
 import android.nfc.NfcAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.erikh.reach.R;
 
-public class NFCActivity extends AppCompatActivity {
+public class RunActivity extends AppCompatActivity {
 
-    public static final String TAG = "NFCActivity";
+    Context context;
+
+    public static final String TAG = "RunActivity";
 
     private TextView textView;
     private NfcAdapter nfcAdapter;
@@ -28,9 +32,9 @@ public class NFCActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nfc_activity);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_run);
+
+        context = getApplicationContext();
 
         textView = (TextView) findViewById(R.id.NFC_info);
 
@@ -49,7 +53,6 @@ public class NFCActivity extends AppCompatActivity {
             pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         }
-
     }
 
     @Override
@@ -90,5 +93,4 @@ public class NFCActivity extends AppCompatActivity {
         textView.setText(tagSerialNumber);
 
     }
-
 }

@@ -1,14 +1,14 @@
-package com.example.erikh.reach.ui.home;
+package com.example.erikh.reach.ui.run;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class RunViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public RunViewModel() {
         mText = new MutableLiveData<>();
         //mText.setValue("This is home fragment");
     }
