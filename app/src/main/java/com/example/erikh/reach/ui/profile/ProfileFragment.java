@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.erikh.reach.R;
+import com.example.erikh.reach.UserInfo;
 
 public class ProfileFragment extends Fragment {
 
@@ -20,6 +21,15 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+        UserInfo user = UserInfo.getInstance();
+
+        final int km = user.getRunKm();
+
+
+
+
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -27,7 +37,7 @@ public class ProfileFragment extends Fragment {
         profileViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                textView.setText("You’ve run a total of " + km + "" + " km");
             }
         });
         return root;

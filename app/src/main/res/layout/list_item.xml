@@ -11,6 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/nameId"
+            android:textStyle="bold"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -48,6 +49,33 @@
 
     <TableRow
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkpoints"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:text="Checkpoints: "
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkpointsId"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:text="\?"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12sp">
         <androidx.appcompat.widget.AppCompatTextView
@@ -65,12 +93,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/locationId"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="42dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="12sp"
             />
     </TableRow>
+
+
 
 </LinearLayout>

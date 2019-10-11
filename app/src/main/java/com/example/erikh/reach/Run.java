@@ -3,6 +3,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Run {
@@ -13,7 +14,7 @@ public class Run {
     private  ArrayList<Date> f = new ArrayList<Date>();
     private  String p;
 
-    private DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");
+    private DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
 
     public Run(String name, String location, String estimate, String picPath) {
         n = name;
@@ -40,7 +41,27 @@ public class Run {
     }
 
     public String getEstimateAsString() {
-        return formatter.format(e).toString();
+
+        //Writing the time in a more comprehensive way
+        String[] timeArray = formatter.format(e).split(":",0);
+        //Remove the SSS part
+        timeArray = Arrays.copyOf(timeArray, timeArray.length-1);
+
+        //If a run is actually 12 hours long, this will not work...
+        String tempString = "";
+        if(!timeArray[0].equals("00")){
+            tempString += timeArray[0] + " hours ";
+        }
+        if(!timeArray[1].equals("00")){
+            tempString += timeArray[1] + " min ";
+        }
+        if(!timeArray[2].equals("00")){
+            tempString += timeArray[2] + " sec ";
+        }
+        return tempString;
+
+        //Jens code
+        //return formatter.format(e).toString();
     }
 
     public String getLocation() {
