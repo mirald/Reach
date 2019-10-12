@@ -66,6 +66,7 @@ public class RunActivity extends AppCompatActivity {
 
         String mapURL = "https://www.mapquestapi.com/staticmap/v5/map?key=KEY&center=Boston,MA&size=@2x";
 
+
     }
 
     @Override
