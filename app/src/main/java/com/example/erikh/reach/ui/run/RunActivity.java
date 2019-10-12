@@ -14,6 +14,8 @@ import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,11 @@ public class RunActivity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     String serialNumber;
     CheckpointDatabase checkpoints;
+
+    ImageView mapImage;
+    ProgressBar progressBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,9 @@ public class RunActivity extends AppCompatActivity {
             pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         }
+
+        String mapURL = "https://www.mapquestapi.com/staticmap/v5/map?key=KEY&center=Boston,MA&size=@2x";
+
     }
 
     @Override
@@ -124,5 +134,4 @@ public class RunActivity extends AppCompatActivity {
         }
         return tagSerialNumber.toString();
     }
-
 }

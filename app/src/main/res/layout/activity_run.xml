@@ -13,4 +13,11 @@
         android:text="@string/NFC_status"
         android:padding="@dimen/normal_margins"/>
 
+    <ImageView
+        android:id="@+id/maps_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/NFC_info"
+        android:contentDescription="image of map" />
+
 </RelativeLayout>
