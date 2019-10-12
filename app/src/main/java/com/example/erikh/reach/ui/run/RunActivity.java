@@ -3,19 +3,33 @@ package com.example.erikh.reach.ui.run;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.nfc.Tag;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 
+import com.example.erikh.reach.BuildConfig;
+import com.example.erikh.reach.GlideApp;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+
+import java.util.Map;
 
 public class RunActivity extends AppCompatActivity {
 
@@ -28,6 +42,11 @@ public class RunActivity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     String serialNumber;
     CheckpointDatabase checkpoints;
+
+    ImageView mapImageView;
+    ProgressBar progressBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +75,33 @@ public class RunActivity extends AppCompatActivity {
             pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         }
+
+        String API_key = BuildConfig.MapquestAPIKey;
+        Log.d(TAG, API_key);
+
+        String mapURL = "https://www.mapquestapi.com/staticmap/v5/map?key="+API_key+"&center=Boston," +
+                "MA&size=@2x";
+
+        mapImageView = (ImageView) findViewById(R.id.map_image);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        //TODO add error and placeholder images
+        GlideApp.with(context).load(mapURL).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                return false;
+            }
+        }).into(mapImageView);
+
     }
 
     @Override
@@ -124,5 +170,4 @@ public class RunActivity extends AppCompatActivity {
         }
         return tagSerialNumber.toString();
     }
-
 }
