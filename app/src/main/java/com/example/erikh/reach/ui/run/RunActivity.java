@@ -3,6 +3,7 @@ package com.example.erikh.reach.ui.run;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class RunActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        textView = (TextView) findViewById(R.id.NFC_info);
+//        textView = (TextView) findViewById(R.id.NFC_info);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -79,8 +80,16 @@ public class RunActivity extends AppCompatActivity {
         String API_key = BuildConfig.MapquestAPIKey;
         Log.d(TAG, API_key);
 
-        String mapURL = "https://www.mapquestapi.com/staticmap/v5/map?key="+API_key+"&center=Boston," +
-                "MA&size=@2x";
+        int height = getScreenHeight();
+        Log.d(TAG, Integer.toString(height));
+        int width = getScreenWidth();
+        Log.d(TAG, Integer.toString(width));
+
+        String mapURL =
+                "https://www.mapquestapi.com/staticmap/v5/map?key="+API_key+"&locations" +
+                "=57.708765,11.936681||57.706472,11.935180||57.707962,11.940713||57.704813,11" +
+                        ".941643||57.708435,11.943359||57.713327,11.940594||57.714843,11" +
+                        ".932599||57.717777,11.943984&size="+1080+ "," + height;
 
         mapImageView = (ImageView) findViewById(R.id.map_image);
 
@@ -153,8 +162,8 @@ public class RunActivity extends AppCompatActivity {
 
         String name = checkpoints.getCheckpointFromSerial(serialNumber.trim()).getName();
         Log.d(TAG, name);
-        textView.setText(name);
-//        textView.setText(checkpoints.getCheckpoint(serialNumber).getName());
+        Toast.makeText(this, name,
+                Toast.LENGTH_SHORT).show();
 
     }
 
@@ -169,5 +178,13 @@ public class RunActivity extends AppCompatActivity {
             tagSerialNumber.append(s).append(' ');
         }
         return tagSerialNumber.toString();
+    }
+
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 }
