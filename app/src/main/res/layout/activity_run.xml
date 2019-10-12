@@ -13,11 +13,27 @@
         android:text="@string/NFC_status"
         android:padding="@dimen/normal_margins"/>
 
-    <ImageView
-        android:id="@+id/maps_image"
+    <RelativeLayout
+        android:id="@+id/book_cover_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/NFC_info"
-        android:contentDescription="image of map" />
+        android:layout_below="@id/NFC_info">
+        <ImageView
+            android:id="@+id/map_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="image of map"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/medium_margins"
+            android:layout_centerInParent="true"/>
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"/>
+    </RelativeLayout>
 
 </RelativeLayout>
