@@ -10,14 +10,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 
+import com.example.erikh.reach.GlideApp;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 public class RunActivity extends AppCompatActivity {
 
@@ -69,6 +76,10 @@ public class RunActivity extends AppCompatActivity {
         mapImageView = (ImageView) findViewById(R.id.map_image);
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        
+
     }
 
     @Override
