@@ -3,9 +3,6 @@ package com.example.erikh.reach.ui.run;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcManager;
@@ -16,17 +13,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.example.erikh.reach.BuildConfig;
+import com.example.erikh.reach.CurrentRun;
 import com.example.erikh.reach.GlideApp;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -38,8 +33,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-
-import java.util.Locale;
+import com.example.erikh.reach.Run;
 
 public class RunActivity extends AppCompatActivity {
 
@@ -59,7 +53,8 @@ public class RunActivity extends AppCompatActivity {
 
     String API_key;
 
-
+    public static Run run;
+    CurrentRun cRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +87,11 @@ public class RunActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         API_key = BuildConfig.MapquestAPIKey;
+
+        Log.d(TAG, Run.toString(run));
+
+        cRun = new CurrentRun(run.getCheckpoints());
+        Log.d(TAG, CurrentRun.toString(cRun));
 
 
         mapImageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

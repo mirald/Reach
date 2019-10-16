@@ -1,3 +1,5 @@
+package com.example.erikh.reach;
+
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.Run;
 
@@ -5,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CurrentRun {
-    HashMap<Checkpoint, Boolean> map;
+    private static HashMap<Checkpoint, Boolean> map;
 
     public CurrentRun(ArrayList<Checkpoint> checkpoints) {
         HashMap<Checkpoint, Boolean> initMap = new HashMap<>();
@@ -22,5 +24,9 @@ public class CurrentRun {
 
     public void updateCheckpointScannedStatus(Checkpoint checkpoint) {
         this.map.put(checkpoint, true);
+    }
+
+    public static String toString(CurrentRun cRun){
+        return map.toString();
     }
 }
