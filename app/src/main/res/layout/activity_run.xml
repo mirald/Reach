@@ -32,7 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            android:onClick="resetChronometer"/>
     </RelativeLayout>
+
+    <include layout="@layout/counter"/>
 
 </RelativeLayout>
