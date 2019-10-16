@@ -22,8 +22,12 @@ public class CurrentRun {
         return map;
     }
 
-    public void updateCheckpointScannedStatus(Checkpoint checkpoint) {
-        this.map.put(checkpoint, true);
+    public Boolean getStatus(Checkpoint checkpoints){
+        return map.get(checkpoints);
+    }
+
+    public void updateCheckpointScannedStatus(Checkpoint checkpoint, Boolean bool) {
+        this.map.put(checkpoint, bool);
     }
 
     public static String toString(CurrentRun cRun){
