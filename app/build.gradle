@@ -22,9 +22,7 @@ android {
 
     buildTypes.each {
         it.buildConfigField('String', "MapquestAPIKey", MAPQUEST_API_KEY)
-        it.buildConfigField('String', 'GoogleMapsAPIKey', GOOGLE_MAPS_API_KEY)
         it.resValue('string', "mapquest_api_key", MAPQUEST_API_KEY)
-        it.resValue('string', "google_maps_api_key", GOOGLE_MAPS_API_KEY)
     }
 }
 
