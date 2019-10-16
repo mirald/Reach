@@ -111,7 +111,7 @@ public class RunActivity extends AppCompatActivity {
                 MapURL mapURL = new MapURL(cRun, width, height);
                 String url = mapURL.getMapURL();
 
-                Log.d(TAG, url);
+                Log.d(TAG, "Map url: " + url);
 
                 progressBar.setVisibility(View.VISIBLE);
 
