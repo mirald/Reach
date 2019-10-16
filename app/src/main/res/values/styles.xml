@@ -6,6 +6,7 @@
         <item name="colorPrimary">#4A86E8</item>
         <item name="colorPrimaryDark">#005AB5</item>
         <item name="colorAccent">#FF8A65</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="list_item">
