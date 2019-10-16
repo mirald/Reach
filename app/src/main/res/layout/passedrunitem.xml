@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
+    android:background="@android:drawable/dialog_holo_light_frame"
+    >
+
+<!--
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +23,8 @@
             android:textSize="20sp"
             />
     </TableRow>
+-->
+
 
     <TableRow
         android:layout_width="wrap_content"
@@ -31,6 +37,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textAlignment="center"
             android:textSize="12sp"
             android:text="Name: "
             />
@@ -42,41 +49,35 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textAlignment="center"
             android:textSize="12sp" />
     </TableRow>
 
-
     <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Time: "
-        android:textSize="12sp" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/timeid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textSize="12sp" />
-
-
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:text="Time: "
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeid"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            />
     </TableRow>
-
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></TableRow>
 
     <TableRow
         android:layout_width="wrap_content"
@@ -97,14 +98,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lengthId"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="12sp"
             />
     </TableRow>
-
-
 
 </LinearLayout>
