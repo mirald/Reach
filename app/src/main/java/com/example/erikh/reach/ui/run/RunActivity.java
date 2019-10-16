@@ -31,7 +31,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-import java.util.Map;
+import java.util.Locale;
 
 public class RunActivity extends AppCompatActivity {
 
@@ -88,7 +88,7 @@ public class RunActivity extends AppCompatActivity {
                 "https://www.mapquestapi.com/staticmap/v5/map?key="+API_key+"&locations" +
                 "=57.708765,11.936681||57.706472,11.935180||57.707962,11.940713||57.704813,11" +
                         ".941643||57.708435,11.943359||57.713327,11.940594||57.714843,11" +
-                        ".932599||57.717777,11.943984&size="+1080+ "," + height;
+                        ".932599||57.717777,11.943984&size="+width+ "," + height;
 
         mapImageView = (ImageView) findViewById(R.id.map_image);
 
