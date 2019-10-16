@@ -49,7 +49,7 @@ public class RunFragment extends Fragment {
         context = getContext();
 
         RunList list = RunList.getRunList();
-        ArrayList<Run> runArrayList = list.getRunArrayList();
+        final ArrayList<Run> runArrayList = list.getRunArrayList();
 
         listItem runs = new listItem(context, R.layout.activity_main, runArrayList);
 
@@ -62,6 +62,7 @@ public class RunFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(getActivity(), RunActivity.class);
                 //myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                RunActivity.run = runArrayList.get(position);
                 RunFragment.this.startActivity(myIntent);
             }
         });

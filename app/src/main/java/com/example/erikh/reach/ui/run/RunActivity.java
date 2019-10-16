@@ -3,9 +3,6 @@ package com.example.erikh.reach.ui.run;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcManager;
@@ -16,17 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.example.erikh.reach.BuildConfig;
+import com.example.erikh.reach.CurrentRun;
 import com.example.erikh.reach.GlideApp;
+import com.example.erikh.reach.MapURL;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -38,8 +34,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-
-import java.util.Locale;
+import com.example.erikh.reach.Run;
 
 public class RunActivity extends AppCompatActivity {
 
@@ -59,7 +54,8 @@ public class RunActivity extends AppCompatActivity {
 
     String API_key;
 
-
+    public static Run run;
+    CurrentRun cRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +89,11 @@ public class RunActivity extends AppCompatActivity {
 
         API_key = BuildConfig.MapquestAPIKey;
 
+        Log.d(TAG, Run.toString(run));
+
+        cRun = new CurrentRun(run.getCheckpoints());
+        Log.d(TAG, CurrentRun.toString(cRun));
+
 
         mapImageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -106,17 +107,15 @@ public class RunActivity extends AppCompatActivity {
                 height = mapImageView.getHeight();
                 width = mapImageView.getWidth();
 
-                String mapURL = "https://www.mapquestapi.com/staticmap/v5/map?key="+API_key+"&locations" +
-                        "=57.708765,11.936681||57.706472,11.935180||57.707962,11.940713||57" +
-                        ".704813,11" +
-                        ".941643||57.708435,11.943359||57.713327,11.940594|marker-red-lg||57.714843,11" +
-                        ".932599||57.717777,11.943984&size="+ width + "," + height +
-                        "@2x&defaultMarker=marker-gray-lg";
 
+                MapURL mapURL = new MapURL(cRun, width, height);
+                String url = mapURL.getMapURL();
+
+                Log.d(TAG, "Map url: " + url);
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                GlideApp.with(context).load(mapURL).placeholder(new ColorDrawable(ContextCompat.getColor(context, R.color.whiteBackground)))
+                GlideApp.with(context).load(url).placeholder(new ColorDrawable(ContextCompat.getColor(context, R.color.whiteBackground)))
                         .error(new ColorDrawable(ContextCompat.getColor(context,
                                 R.color.whiteBackground))).listener(new RequestListener<Drawable>() {
                     @Override
