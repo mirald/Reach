@@ -208,31 +208,27 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
+    //region CHRONOMETER
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.startButton: {
                 startChronometer();
-                Log.d("tag?", "onClick: start");
                 break;
             }
             case R.id.stopButton:{
                 stopChronometer();
-                Log.d("tag?", "onClick: stop");
                 break;
             }
             case R.id.resetButton: {
                 resetChronometer();
-                Log.d("tag?", "onClick: reset");
                 break;
             }
         }
     }
 
     private void startChronometer() {
-        Log.d("tag?", "onClick: startmethod");
         if(!running){
-            Log.d("tag?", "onClick: startrunning");
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
@@ -240,18 +236,17 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void stopChronometer() {
-        Log.d("tag?", "onClick: !startmethod");
         if(running){
-            Log.d("tag?", "onClick: !startrunning");
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+            Log.d("Chronometer", "Time:" + ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000));
             running = false;
         }
     }
 
     private void resetChronometer() {
-        Log.d("tag?", "onClick: reset");
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
     }
+    //endregion
 }
