@@ -16,7 +16,8 @@ public class Run {
 
     private DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
 
-    public Run(String name, String location, String estimate, String picPath) {
+    public Run(String name, String location, String estimate, String picPath, String[] checkpoints, CheckpointDatabase checkpointDatabase) {
+
         n = name;
         l = location;
         p = picPath;
@@ -26,6 +27,8 @@ public class Run {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
+
+        addAllCheckpointsFromDatabase(checkpoints, checkpointDatabase);
     }
 
     public String getName() {
@@ -47,7 +50,6 @@ public class Run {
         //Remove the SSS part
         timeArray = Arrays.copyOf(timeArray, timeArray.length-1);
 
-        //If a run is actually 12 hours long, this will not work...
         String tempString = "";
         if(!timeArray[0].equals("00")){
             tempString += timeArray[0] + " hours ";
@@ -107,5 +109,9 @@ public class Run {
 
     public void addCheckpoint(Checkpoint checkpoint) {
         c.add(checkpoint);
+    }
+
+    private void addAllCheckpointsFromDatabase (String[] checkpoints, CheckpointDatabase checkpointDatabase) {
+            checkpointDatabase.getSpecificCheckpoints(checkpoints);
     }
 }
