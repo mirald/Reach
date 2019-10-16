@@ -3,7 +3,7 @@ package com.example.erikh.reach.ui.run;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
@@ -11,10 +11,13 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+
 
 import android.util.Log;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.erikh.reach.BuildConfig;
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
@@ -28,7 +31,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.DataSource;
@@ -57,6 +59,7 @@ public class RunActivity extends AppCompatActivity {
     public static Run run;
     CurrentRun cRun;
     MapURL mapURL;
+    String oldURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +112,15 @@ public class RunActivity extends AppCompatActivity {
                 height = mapImageView.getHeight();
                 width = mapImageView.getWidth();
 
+                mapImageView.setMaxHeight(height);
+                mapImageView.setMaxWidth(width);
+
 
                 mapURL = new MapURL(cRun, width, height);
                 String url = mapURL.getMapURL();
+                if(oldURL.isEmpty()){
+                    oldURL = url;
+                }
 
                 Log.d(TAG, "Map url: " + url);
 
@@ -178,7 +187,7 @@ public class RunActivity extends AppCompatActivity {
 
     }
 
-    public String byteToHex(byte[] byteArray){
+    private String byteToHex(byte[] byteArray){
         StringBuilder tagSerialNumber = new StringBuilder();
 
         for (byte hexByte : byteArray) {
@@ -191,30 +200,39 @@ public class RunActivity extends AppCompatActivity {
         return tagSerialNumber.toString();
     }
 
-    public void updateMap(Checkpoint checkpoint){
+    private void updateMap(Checkpoint checkpoint){
         cRun.updateCheckpointScannedStatus(checkpoint, true);
         mapURL.updateURL(cRun);
         progressBar.setVisibility(View.VISIBLE);
+
         setMap(mapURL.getMapURL(), context, mapImageView);
 
     }
 
-    public void setMap(String mapURL, Context con, ImageView mapIV){
-        GlideApp.with(con).load(mapURL).error(new ColorDrawable(ContextCompat.getColor(con,
-                        R.color.whiteBackground))).listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Glide load failed");
-                return false;
-            }
+    private void setMap(String mapURL, Context con, ImageView mapIV){
+        Log.d(TAG, oldURL);
+        GlideApp.with(con).load(mapURL)
+                .thumbnail(GlideApp
+                    .with(con)
+                    .load(oldURL)
+                    .fitCenter()
+            ).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "Glide load failed");
+                    return false; // thumbnail was not shown, do as usual
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Glide resource ready");
-                return false;
-            }
-        }).into(mapIV);
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "Glide resource ready");
+                    return false; // thumbnail was not shown, do as usual
+                }
+            }).into(mapIV);
+        oldURL = mapURL;
+        Log.d(TAG,oldURL);
     }
 }
