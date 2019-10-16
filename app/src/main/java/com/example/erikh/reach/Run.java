@@ -111,6 +111,10 @@ public class Run {
         c.add(checkpoint);
     }
 
+    public int getNumberOfCheckpoints() {
+        return c.size();
+    }
+
     private void addAllCheckpointsFromDatabase (String[] checkpoints, CheckpointDatabase checkpointDatabase) {
         for (Checkpoint checkpoint :
                 checkpointDatabase.getSpecificCheckpoints(checkpoints)) {
