@@ -6,25 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.run.RunActivity">
 
-    <TextView
-        android:id="@+id/NFC_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/NFC_status"
-        android:padding="@dimen/normal_margins"/>
+<!--    <TextView-->
+<!--        android:id="@+id/NFC_info"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/NFC_status"-->
+<!--        android:padding="@dimen/normal_margins"/>-->
 
     <RelativeLayout
         android:id="@+id/book_cover_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/NFC_info">
+        android:layout_height="match_parent"
+        >
         <ImageView
             android:id="@+id/map_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="image of map"
             android:layout_centerHorizontal="true"
-            android:padding="@dimen/medium_margins"
             android:layout_centerInParent="true"/>
 
         <ProgressBar
