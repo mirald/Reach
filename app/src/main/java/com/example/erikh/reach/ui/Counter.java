@@ -13,6 +13,7 @@ import com.example.erikh.reach.R;
 
 //https://www.youtube.com/watch?v=RLnb4vVkftc
 //https://stackoverflow.com/questions/3320115/android-onclicklistener-identify-a-button/3320148#3320148
+
 public class Counter extends Activity  implements View.OnClickListener {
 
     private Chronometer chronometer;
@@ -28,26 +29,36 @@ public class Counter extends Activity  implements View.OnClickListener {
         setContentView(R.layout.activity_run);
 
         chronometer = findViewById(R.id.chronometer);
+
+        //Buttons for testing, can be removed and connect the methods to events in the app later
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         resetButton = (Button) findViewById(R.id.resetButton);
+
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        resetButton.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.startButton:
+            case R.id.startButton: {
                 startChronometer();
                 Log.d("tag?", "onClick: start");
                 break;
-            case R.id.stopButton:
+            }
+            case R.id.stopButton:{
                 stopChronometer();
                 Log.d("tag?", "onClick: stop");
                 break;
-            case R.id.resetButton:
+            }
+            case R.id.resetButton: {
                 resetChronometer();
                 Log.d("tag?", "onClick: reset");
                 break;
+            }
         }
     }
 
