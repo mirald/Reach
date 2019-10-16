@@ -4,35 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.run.RunActivity">
+    tools:context=".ui.run.RunActivity"
+    android:id="@+id/run_activity">
 
-<!--    <TextView-->
-<!--        android:id="@+id/NFC_info"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/NFC_status"-->
-<!--        android:padding="@dimen/normal_margins"/>-->
-
-    <RelativeLayout
-        android:id="@+id/book_cover_group"
+    <ImageView
+        android:id="@+id/map_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <ImageView
-            android:id="@+id/map_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="image of map"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"/>
+        android:contentDescription="image of map"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/gray_backgorund"
+        android:scaleType="fitXY"/>
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"/>
-    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
 
 </RelativeLayout>
