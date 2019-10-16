@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".ui.run.RunActivity"
-            android:networkSecurityConfig="@xml/network_security_config">
+            android:networkSecurityConfig="@xml/network_security_config"
+            >
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
 

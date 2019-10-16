@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import android.util.Log;
 
 import com.example.erikh.reach.BuildConfig;
+import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
 import com.example.erikh.reach.GlideApp;
 import com.example.erikh.reach.MapURL;
@@ -42,7 +43,6 @@ public class RunActivity extends AppCompatActivity {
 
     public static final String TAG = "RunActivity";
 
-    private TextView textView;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     int width, height;
@@ -56,6 +56,7 @@ public class RunActivity extends AppCompatActivity {
 
     public static Run run;
     CurrentRun cRun;
+    MapURL mapURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class RunActivity extends AppCompatActivity {
         checkpoints = CheckpointDatabase.getCheckpointDatabase();
 
         context = getApplicationContext();
+
 
 //        textView = (TextView) findViewById(R.id.NFC_info);
         NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
@@ -108,30 +110,14 @@ public class RunActivity extends AppCompatActivity {
                 width = mapImageView.getWidth();
 
 
-                MapURL mapURL = new MapURL(cRun, width, height);
+                mapURL = new MapURL(cRun, width, height);
                 String url = mapURL.getMapURL();
 
                 Log.d(TAG, "Map url: " + url);
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                GlideApp.with(context).load(url).placeholder(new ColorDrawable(ContextCompat.getColor(context, R.color.whiteBackground)))
-                        .error(new ColorDrawable(ContextCompat.getColor(context,
-                                R.color.whiteBackground))).listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        progressBar.setVisibility(View.GONE);
-                        Log.d(TAG, "Glide load failed");
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        progressBar.setVisibility(View.GONE);
-                        Log.d(TAG, "Glide resource ready");
-                        return false;
-                    }
-                }).into(mapImageView);
+                setMap(url, context, mapImageView);
             }
         });
 
@@ -181,13 +167,14 @@ public class RunActivity extends AppCompatActivity {
         serialNumber = byteToHex(tagID);
 
         Log.d(TAG, "Byte array: " + serialNumber);
-        Toast.makeText(this, "NFC scanned",
+
+        Checkpoint checkpoint = checkpoints.getCheckpointFromSerial(serialNumber.trim());
+        String name = checkpoint.getName();
+        Log.d(TAG, name);
+        Toast.makeText(this, "Tag " + name + " has been scanned",
                 Toast.LENGTH_SHORT).show();
 
-        String name = checkpoints.getCheckpointFromSerial(serialNumber.trim()).getName();
-        Log.d(TAG, name);
-        Toast.makeText(this, name,
-                Toast.LENGTH_SHORT).show();
+        updateMap(checkpoint);
 
     }
 
@@ -202,5 +189,32 @@ public class RunActivity extends AppCompatActivity {
             tagSerialNumber.append(s).append(' ');
         }
         return tagSerialNumber.toString();
+    }
+
+    public void updateMap(Checkpoint checkpoint){
+        cRun.updateCheckpointScannedStatus(checkpoint, true);
+        mapURL.updateURL(cRun);
+        progressBar.setVisibility(View.VISIBLE);
+        setMap(mapURL.getMapURL(), context, mapImageView);
+
+    }
+
+    public void setMap(String mapURL, Context con, ImageView mapIV){
+        GlideApp.with(con).load(mapURL).error(new ColorDrawable(ContextCompat.getColor(con,
+                        R.color.whiteBackground))).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "Glide load failed");
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "Glide resource ready");
+                return false;
+            }
+        }).into(mapIV);
     }
 }

@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         list.addRun(new Run("Big Gothenburg ", "Göteborg", "00:30:47:20", "test/test",
                 new String[]{"mirandas kort", "blue tag", "154", "lindholmen",
-                        "nordstan",
-                        "erikskort","jens kort", "johans kort", "adams kort"}, cDB));
+                        "nordstan", "eriks kort","jens kort", "johans kort", "adams kort"}, cDB));
 
 
 
