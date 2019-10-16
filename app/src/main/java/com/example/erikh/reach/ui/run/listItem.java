@@ -30,9 +30,11 @@ public class listItem extends ArrayAdapter<Run> {
         TextView name = (TextView) convertView.findViewById(R.id.nameId);
         TextView estimatedTime = (TextView) convertView.findViewById(R.id.estimatedTimeId);
         TextView location = (TextView) convertView.findViewById(R.id.locationId);
+        TextView checkpointNumber = (TextView) convertView.findViewById(R.id.checkpointsId);
         name.setText(run.getName());
         estimatedTime.setText(run.getEstimateAsString());
         location.setText(run.getLocation());
+        checkpointNumber.setText(run.getNumberOfCheckpoints() + "");
 
 
         return convertView;
