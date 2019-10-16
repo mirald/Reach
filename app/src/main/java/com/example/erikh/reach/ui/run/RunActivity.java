@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.Bundle;
 
@@ -59,19 +60,17 @@ public class RunActivity extends AppCompatActivity {
         context = getApplicationContext();
 
 //        textView = (TextView) findViewById(R.id.NFC_info);
-
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
+        nfcAdapter = manager.getDefaultAdapter();
 
         if(nfcAdapter == null){
             Toast.makeText(this, "The app requires NFC to perform that action",
                     Toast.LENGTH_LONG).show();
-            textView.setText("Your phone is not supported");
         }
 
-        if(!nfcAdapter.isEnabled()){
+        else if(!nfcAdapter.isEnabled()){
             Toast.makeText(this, "Turn on NFC to use this function",
                     Toast.LENGTH_SHORT).show();
-            textView.setText("Turn on NFC");
         } else{
             pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -122,7 +121,7 @@ public class RunActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
-        if(!nfcAdapter.isEnabled()){
+        else if(!nfcAdapter.isEnabled()){
             Toast.makeText(this, "Turn on NFC to use this function",
                     Toast.LENGTH_SHORT).show();
         } else{
@@ -140,7 +139,7 @@ public class RunActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
-        if(!nfcAdapter.isEnabled()){
+        else if(!nfcAdapter.isEnabled()){
             Toast.makeText(this, "Turn on NFC to use this function",
                     Toast.LENGTH_SHORT).show();
         } else{
