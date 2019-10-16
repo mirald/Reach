@@ -112,6 +112,9 @@ public class Run {
     }
 
     private void addAllCheckpointsFromDatabase (String[] checkpoints, CheckpointDatabase checkpointDatabase) {
-            checkpointDatabase.getSpecificCheckpoints(checkpoints);
+        for (Checkpoint checkpoint :
+                checkpointDatabase.getSpecificCheckpoints(checkpoints)) {
+            addCheckpoint(checkpoint);
+        }
     }
 }
