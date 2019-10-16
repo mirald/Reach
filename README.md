@@ -11,7 +11,7 @@ On Linux:
 (Untested) /home/your-name/.gradle
 
 On Windows:
-(Untested) C:\Users\your-name\.gradle
+(Untested) C:\Users\your-name\ .gradle
 
 2. Open gradle.properties using vim or any ther text editor. If there is no gradle.properties, create it
 
