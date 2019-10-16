@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.example.erikh.reach.BuildConfig;
@@ -21,6 +22,8 @@ import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,7 +36,7 @@ import com.bumptech.glide.request.target.Target;
 
 import java.util.Map;
 
-public class RunActivity extends AppCompatActivity {
+public class RunActivity extends AppCompatActivity implements View.OnClickListener {
 
     Context context;
 
@@ -47,6 +50,13 @@ public class RunActivity extends AppCompatActivity {
 
     ImageView mapImageView;
     ProgressBar progressBar;
+
+    private Chronometer chronometer;
+    private long pauseOffset;
+    private boolean running;
+    Button startButton;
+    Button stopButton;
+    Button resetButton;
 
 
 
@@ -109,6 +119,17 @@ public class RunActivity extends AppCompatActivity {
                 return false;
             }
         }).into(mapImageView);
+
+        chronometer = findViewById(R.id.chronometer);
+
+        //Buttons for testing, can be removed and connect the methods to events in the app later
+        startButton = (Button) findViewById(R.id.startButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
+        resetButton = (Button) findViewById(R.id.resetButton);
+
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        resetButton.setOnClickListener(this);
 
     }
 
@@ -185,5 +206,52 @@ public class RunActivity extends AppCompatActivity {
 
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.startButton: {
+                startChronometer();
+                Log.d("tag?", "onClick: start");
+                break;
+            }
+            case R.id.stopButton:{
+                stopChronometer();
+                Log.d("tag?", "onClick: stop");
+                break;
+            }
+            case R.id.resetButton: {
+                resetChronometer();
+                Log.d("tag?", "onClick: reset");
+                break;
+            }
+        }
+    }
+
+    private void startChronometer() {
+        Log.d("tag?", "onClick: startmethod");
+        if(!running){
+            Log.d("tag?", "onClick: startrunning");
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+        }
+    }
+
+    private void stopChronometer() {
+        Log.d("tag?", "onClick: !startmethod");
+        if(running){
+            Log.d("tag?", "onClick: !startrunning");
+            chronometer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+            running = false;
+        }
+    }
+
+    private void resetChronometer() {
+        Log.d("tag?", "onClick: reset");
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
     }
 }

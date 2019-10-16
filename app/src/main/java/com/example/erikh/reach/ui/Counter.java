@@ -1,6 +1,5 @@
 package com.example.erikh.reach.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -8,13 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.erikh.reach.R;
 
 
 //https://www.youtube.com/watch?v=RLnb4vVkftc
 //https://stackoverflow.com/questions/3320115/android-onclicklistener-identify-a-button/3320148#3320148
 
-public class Counter extends Activity  implements View.OnClickListener {
+public class Counter extends AppCompatActivity implements View.OnClickListener {
 
     private Chronometer chronometer;
     private long pauseOffset;
