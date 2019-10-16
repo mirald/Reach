@@ -107,18 +107,11 @@ public class RunActivity extends AppCompatActivity {
                 height = mapImageView.getHeight();
                 width = mapImageView.getWidth();
 
-//                String mapURL = "https://www.mapquestapi.com/staticmap/v5/map?key="+API_key+"&locations" +
-//                        "=57.708765,11.936681||57.706472,11.935180||57.707962,11.940713||57" +
-//                        ".704813,11" +
-//                        ".941643||57.708435,11.943359||57.713327,11.940594||57.714843,11" +
-//                        ".932599||57.717777,11.943984&size="+ width + "," + height +
-//                        "@2x&defaultMarker=marker-gray-lg";
 
                 MapURL mapURL = new MapURL(cRun, width, height);
                 String url = mapURL.getMapURL();
 
                 Log.d(TAG, url);
-
 
                 progressBar.setVisibility(View.VISIBLE);
 
