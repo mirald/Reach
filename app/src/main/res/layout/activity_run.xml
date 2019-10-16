@@ -15,7 +15,6 @@
         android:contentDescription="image of map"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:src="@drawable/gray_backgorund"
         android:scaleType="fitXY"
         />
 
