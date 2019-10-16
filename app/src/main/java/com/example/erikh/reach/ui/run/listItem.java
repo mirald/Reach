@@ -19,6 +19,8 @@ public class listItem extends ArrayAdapter<Run> {
     }
 
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
