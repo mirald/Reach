@@ -8,18 +8,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.erikh.reach.ui.run.RunFragment"
-        android:label="@string/title_run"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.erikh.reach.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_dashboard" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.erikh.reach.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>

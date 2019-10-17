@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/list_item"
     >
 
+<!--
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,14 +14,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/nameId"
             android:textStyle="bold"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:text="PLACEHOLDER"
             />
     </TableRow>
+-->
+
 
     <TableRow
         android:layout_width="wrap_content"
@@ -32,17 +31,17 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/estimatedTime"
-            android:layout_marginStart="12dp"
+            android:id="@+id/name"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="12sp"
-            android:text="Estimated time: "
+            android:text="Name: "
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/estimatedTimeId"
+            android:id="@+id/nameid2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -58,28 +57,25 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkpoints"
-            android:layout_marginStart="12dp"
+            android:id="@+id/time"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="12sp"
-            android:text="Checkpoints: "
+            android:text="Time: "
             />
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkpointsId"
-            android:layout_marginStart="23dp"
+            android:id="@+id/timeid"
+            android:layout_marginStart="13dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="12sp"
-            android:text="\?"
             />
     </TableRow>
-
-
 
     <TableRow
         android:layout_width="wrap_content"
@@ -88,19 +84,19 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/location"
-            android:layout_marginStart="12dp"
+            android:id="@+id/length"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="12sp"
-            android:text="Location: "
+            android:text="Length: "
             />
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/locationId"
-            android:layout_marginStart="42dp"
+            android:id="@+id/lengthId"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
@@ -109,38 +105,13 @@
     </TableRow>
 
     <TextView
-        android:id="@+id/start_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="8dp"
-        android:text="Start run!"
-        android:textAlignment="center"
-        android:textColor="#FF8A65"
-        android:textSize="20sp" />
-
-    <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:background="@android:drawable/dialog_holo_light_frame"
-        android:layout_height="230dp"
+        android:layout_height="90dp"
         android:translationZ="-2dp"
-        android:layout_marginTop="-200dp"
+        android:layout_marginTop="-90dp"
         android:layout_marginStart="-8dp"
         android:layout_marginEnd="-8dp"/>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="-180dp"
-        android:layout_marginEnd="12dp"
-        android:translationZ="1dp"
-        android:layout_gravity="right"
-        android:src="@drawable/placeholder_img" />
-
-
-
 
 </LinearLayout>
