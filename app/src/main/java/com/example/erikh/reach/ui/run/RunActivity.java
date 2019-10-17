@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.SystemClock;
 
 import android.util.Log;
 
@@ -28,6 +29,10 @@ import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
 import android.view.View;
+
+import android.widget.Button;
+import android.widget.Chronometer;
+
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -39,7 +44,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
 
-public class RunActivity extends AppCompatActivity {
+public class RunActivity extends AppCompatActivity implements View.OnClickListener {
 
     Context context;
 
@@ -54,7 +59,15 @@ public class RunActivity extends AppCompatActivity {
     ImageView mapImageView;
     ProgressBar progressBar;
 
+    private Chronometer chronometer;
+    private long pauseOffset;
+    private boolean running;
+    Button startButton;
+    Button stopButton;
+    Button resetButton;
+
     String API_key;
+
 
     public static Run run;
     CurrentRun cRun;
@@ -129,6 +142,17 @@ public class RunActivity extends AppCompatActivity {
                 setMap(url, context, mapImageView);
             }
         });
+
+        chronometer = findViewById(R.id.chronometer);
+
+        //Buttons for testing, can be removed and connect the methods to events in the app later
+        startButton = (Button) findViewById(R.id.startButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
+        resetButton = (Button) findViewById(R.id.resetButton);
+
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        resetButton.setOnClickListener(this);
 
     }
 
@@ -235,4 +259,46 @@ public class RunActivity extends AppCompatActivity {
         oldURL = mapURL;
         Log.d(TAG,oldURL);
     }
+
+    //region CHRONOMETER
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.startButton: {
+                startChronometer();
+                break;
+            }
+            case R.id.stopButton:{
+                stopChronometer();
+                break;
+            }
+            case R.id.resetButton: {
+                resetChronometer();
+                break;
+            }
+        }
+    }
+
+    private void startChronometer() {
+        if(!running){
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+        }
+    }
+
+    private void stopChronometer() {
+        if(running){
+            chronometer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+            Log.d("Chronometer", "Time:" + ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000));
+            running = false;
+        }
+    }
+
+    private void resetChronometer() {
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
+    }
+    //endregion
 }
