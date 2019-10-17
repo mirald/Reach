@@ -12,6 +12,9 @@
 
         <activity android:name=".ui.run.RunActivity"
             android:networkSecurityConfig="@xml/network_security_config">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
 
