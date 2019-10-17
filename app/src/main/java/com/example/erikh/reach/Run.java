@@ -121,4 +121,9 @@ public class Run {
             addCheckpoint(checkpoint);
         }
     }
+
+    public static String toString(Run run){
+        return "Name: " + run.n + ", Location: " + run.l + ", Estimate: "+ run.e + ", picPath: " + run.p + ", " +
+                "Checkpoints: " + run.c;
+    }
 }

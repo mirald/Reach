@@ -21,7 +21,7 @@ public class CheckpointDatabase {
         map.put("nordstan", new Checkpoint("Slottsskogen1", 57.684397f, 11.947325f, "6e 8d a3 0f"));
         map.put("eriks kort", new Checkpoint("Slottsskogen2", 57.684528f, 11.937109f, "32 f9 12 63"));
         map.put("jens kort", new Checkpoint("Slottsskogen3", 57.690230f, 11.939141f, "62 94 dc 27"));
-        map.put("johans kort", new Checkpoint("Färjeterminal", 57.701405f, 8.0f, "f2 a7 21 63"));
+        map.put("johans kort", new Checkpoint("Färjeterminal", 57.701405f, 11.947163f, "f2 a7 21 63"));
         map.put("adams kort", new Checkpoint("Lilla bommen", 57.711406f, 11.963881f, "f2 0e 23 63"));
 
         this.checkpointMap = map;
