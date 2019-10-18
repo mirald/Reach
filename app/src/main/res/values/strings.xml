@@ -5,4 +5,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_nfc_activity">NFC_activity</string>
     <string name="NFC_status">Scan NFC!</string>
+    <string name="cancel">CANCEL</string>
+    <string name="enable_nfc">ENABLE</string>
+    <string name="NFC_question">Do you want to enable NFC?</string>
+    <string name="NFC_subtitle">NFC is needed to use this function.</string>
 </resources>
