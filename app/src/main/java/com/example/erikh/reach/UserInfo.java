@@ -10,9 +10,6 @@ public class UserInfo {
         return the_list;
     }
 
-
-    int runKm = 0;
-
     public ArrayList<PassedRuns> listPassedRuns = new ArrayList<PassedRuns>();
 
     PassedRuns Run1 = new PassedRuns("Inner city run", "23km", "22 min");
@@ -20,7 +17,13 @@ public class UserInfo {
 
 
     public int getRunKm (){
-        return runKm;
+        //return runKm;
+        int tempKm = 0;
+        for (PassedRuns pr : listPassedRuns){
+            //Gets all the ints from the length string
+            tempKm += Integer.parseInt(pr.length.replaceAll("\\D+",""));
+        }
+        return tempKm;
     }
 
 
