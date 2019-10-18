@@ -19,8 +19,6 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.erikh.reach.BuildConfig;
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
@@ -48,6 +46,9 @@ import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
 
 public class RunActivity extends AppCompatActivity {
+
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 
     Context context;
 
@@ -162,6 +163,11 @@ public class RunActivity extends AppCompatActivity {
         stopButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
         */
+
+
+        PhotoViewAttacher photoAttacher;
+        photoAttacher= new PhotoViewAttacher(mapImageView);
+        photoAttacher.update();
     }
 
     @Override
