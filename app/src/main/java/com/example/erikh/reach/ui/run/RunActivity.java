@@ -1,7 +1,9 @@
 package com.example.erikh.reach.ui.run;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.graphics.drawable.Drawable;
@@ -17,13 +19,12 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.erikh.reach.BuildConfig;
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
 import com.example.erikh.reach.GlideApp;
 import com.example.erikh.reach.MapURL;
+import com.example.erikh.reach.NFCPermissionDialog;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
@@ -43,8 +44,9 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class RunActivity extends AppCompatActivity implements View.OnClickListener {
+public class RunActivity extends AppCompatActivity {
 
     Context context;
 
@@ -62,9 +64,9 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     private Chronometer chronometer;
     private long pauseOffset;
     private boolean running;
-    Button startButton;
-    Button stopButton;
-    Button resetButton;
+    //Button startButton;
+    //Button stopButton;
+    //Button resetButton;
 
     String API_key;
 
@@ -74,6 +76,8 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     MapURL mapURL;
     String oldURL = "";
 
+    NFCPermissionDialog nfcDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,8 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         checkpoints = CheckpointDatabase.getCheckpointDatabase();
 
         context = getApplicationContext();
+
+        nfcDialog = new NFCPermissionDialog();
 
 
 //        textView = (TextView) findViewById(R.id.NFC_info);
@@ -94,8 +100,8 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         else if(!nfcAdapter.isEnabled()){
-            Toast.makeText(this, "Turn on NFC to use this function",
-                    Toast.LENGTH_SHORT).show();
+            createDialogWindow();
+
         } else{
             pendingIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -146,6 +152,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         chronometer = findViewById(R.id.chronometer);
 
         //Buttons for testing, can be removed and connect the methods to events in the app later
+        /*
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         resetButton = (Button) findViewById(R.id.resetButton);
@@ -153,7 +160,12 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
+        */
 
+
+        PhotoViewAttacher photoAttacher;
+        photoAttacher= new PhotoViewAttacher(mapImageView);
+        photoAttacher.update();
     }
 
     @Override
@@ -161,15 +173,21 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         super.onResume();
 
         if(nfcAdapter == null){
-            Toast.makeText(this, "The app requires NFC to perform that action",
+            Toast.makeText(this, "The app requires NFC support to perform that action",
                     Toast.LENGTH_LONG).show();
         }
 
         else if(!nfcAdapter.isEnabled()){
-            Toast.makeText(this, "Turn on NFC to use this function",
-                    Toast.LENGTH_SHORT).show();
+
         } else{
-            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+            try{
+                nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+            } catch(NullPointerException e){
+                Log.d(TAG, e.toString());
+                pendingIntent = PendingIntent.getActivity(this, 0,
+                        new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+            }
         }
 
     }
@@ -184,8 +202,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         }
 
         else if(!nfcAdapter.isEnabled()){
-            Toast.makeText(this, "Turn on NFC to use this function",
-                    Toast.LENGTH_SHORT).show();
+
         } else{
             nfcAdapter.disableForegroundDispatch(this);
         }
@@ -261,6 +278,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     //region CHRONOMETER
+    /*
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -278,6 +296,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+     */
 
     private void startChronometer() {
         if(!running){
@@ -300,5 +319,23 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
     }
-    //endregion
+
+
+    private void createDialogWindow(){
+        new AlertDialog.Builder(RunActivity.this)
+                .setTitle(R.string.NFC_question)
+                .setMessage(R.string.NFC_subtitle)
+                .setPositiveButton(R.string.enable_nfc, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_NFC_SETTINGS));
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(R.drawable.ic_nfc_white_24dp)
+                .show();
+    }
 }

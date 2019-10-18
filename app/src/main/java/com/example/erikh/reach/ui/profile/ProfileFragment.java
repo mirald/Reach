@@ -34,19 +34,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
         context = getContext();
-
-
-
 
         UserInfo user = UserInfo.getInstance();
 
         final int km = user.getRunKm();
-
-
-
-
 
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
@@ -72,14 +64,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText("You’ve run a total of " + km + "" + " km");
-
-
-
-
-
-
-
-
 
             }
         });

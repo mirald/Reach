@@ -14,6 +14,7 @@
         android:layout_marginLeft="150dp"/>
 
     <!-- Temporary buttons just to try the Counter -->
+    <!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,5 +35,5 @@
         android:text="ResetTest"
         android:id="@+id/resetButton"
         android:layout_marginLeft="150dp"/>
-
+    -->
 </LinearLayout>
