@@ -27,6 +27,13 @@ public class UserInfo {
     private UserInfo(){
 
         listPassedRuns.add(Run1);
+        //Adds a shit ton of runs
+        /*
+        for(int i = 0; i < 9; i++){
+            listPassedRuns.add(new PassedRuns("Run " + i, i + 12 + "km", i + 10 + " min"));
+        }
+        */
+
 
     }
 
