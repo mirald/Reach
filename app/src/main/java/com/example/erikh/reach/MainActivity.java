@@ -25,20 +25,20 @@ public class MainActivity extends AppCompatActivity {
 
         list = RunList.getRunList();
 
-        list.addRun(new Run("Lindholm pier", "Göteborg, Lindholmen", "00:07:20:20", "test/test",
+        list.addRun(new Run("Lindholm pier", "Göteborg, Lindholmen", "00:07:20:20", "map1",
                 new String[]{"mirandas kort", "blue tag", "154"}, cDB));
 
-        list.addRun(new Run("Slottsskogen", "Göteborg, Linné", "00:22:57:20", "test/test",
+        list.addRun(new Run("Slottsskogen", "Göteborg, Linné", "00:22:57:20", "map2",
                 new String[]{"lindholmen","nordstan","eriks kort","jens kort"}, cDB));
 
-        list.addRun(new Run("Central Linné run", "Göteborg, Linné", "00:17:20:20", "test/test",
+        list.addRun(new Run("Central Linné run", "Göteborg, Linné", "00:17:20:20", "map3",
                 new String[]{"lindholmen","johans kort","nordstan","adams kort"}, cDB));
 
-        list.addRun(new Run("Slottsskogen extended", "Göteborg, Majorna, Linné", "12:20:00:20", "test/test",
+        list.addRun(new Run("Slottsskogen extended", "Göteborg, Majorna, Linné", "12:20:00:20", "map4",
                 new String[]{"lindholmen","nordstan","eriks kort","jens kort", "lindholmen",
                         "johans kort","adams kort"}, cDB));
 
-        list.addRun(new Run("Big Gothenburg ", "Göteborg", "00:30:47:20", "test/test",
+        list.addRun(new Run("Big Gothenburg ", "Göteborg", "00:30:47:20", "map5",
                 new String[]{"mirandas kort", "blue tag", "154", "lindholmen",
                         "nordstan", "eriks kort","jens kort", "johans kort", "adams kort"}, cDB));
 

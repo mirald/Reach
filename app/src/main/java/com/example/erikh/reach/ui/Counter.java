@@ -32,6 +32,7 @@ public class Counter extends AppCompatActivity implements View.OnClickListener {
         chronometer = findViewById(R.id.chronometer);
 
         //Buttons for testing, can be removed and connect the methods to events in the app later
+        /*
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         resetButton = (Button) findViewById(R.id.resetButton);
@@ -40,10 +41,13 @@ public class Counter extends AppCompatActivity implements View.OnClickListener {
         stopButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
 
+         */
+
     }
 
     @Override
     public void onClick(View v) {
+        /*
         switch (v.getId()) {
             case R.id.startButton: {
                 startChronometer();
@@ -61,6 +65,8 @@ public class Counter extends AppCompatActivity implements View.OnClickListener {
                 break;
             }
         }
+        */
+         
     }
 
     private void startChronometer() {
