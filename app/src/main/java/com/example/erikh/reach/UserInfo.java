@@ -12,10 +12,10 @@ public class UserInfo {
 
     public ArrayList<PassedRuns> listPassedRuns = new ArrayList<PassedRuns>();
 
-    PassedRuns Run1 = new PassedRuns("Inner city run", "23km", "22 min");
+    PassedRuns Run1 = new PassedRuns("Slottsskogen", "23 km", "22 min");
 
 
-
+    //Used to set the Header on the profile view
     public int getRunKm (){
         //return runKm;
         int tempKm = 0;
