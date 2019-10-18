@@ -44,11 +44,9 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
-
-public class RunActivity extends AppCompatActivity {
-
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+public class RunActivity extends AppCompatActivity {
 
     Context context;
 
