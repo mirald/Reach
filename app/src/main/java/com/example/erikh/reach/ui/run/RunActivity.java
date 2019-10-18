@@ -200,6 +200,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         serialNumber = byteToHex(tagID);
 
         Log.d(TAG, "Byte array: " + serialNumber);
+        startChronometer();
 
         Checkpoint checkpoint = checkpoints.getCheckpointFromSerial(serialNumber.trim());
         String name = checkpoint.getName();
