@@ -1,25 +1,74 @@
 package com.example.erikh.reach;
 
-import android.os.Bundle;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity  {
 
     RunList list;
     CheckpointDatabase cDB;
+
+    private FusedLocationProviderClient client;
+
+    public static float xcord;
+    public static float ycord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        requestPermission();
+
+        client = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            return;
+        }
+
+        client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+
+                if(location != null){
+                    String[] splitstring = location.toString().split(" ");
+                    String cords = splitstring[1];
+                    cords.split(",");
+                    String xcordString =cords.split(",")[0] + "." + cords.split(",")[1];
+                    String ycordString =cords.split(",")[2] + "." + cords.split(",")[3];
+                    xcord = Float.parseFloat(xcordString);
+                    ycord = Float.parseFloat(ycordString);
+                }
+
+            }
+        });
+
+
 
         cDB = CheckpointDatabase.getCheckpointDatabase();
 
@@ -63,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -74,4 +126,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
+    }
+
 }
+
