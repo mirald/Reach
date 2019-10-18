@@ -19,8 +19,6 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.erikh.reach.BuildConfig;
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
