@@ -47,6 +47,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 public class RunActivity extends AppCompatActivity implements View.OnClickListener {
 
     Context context;
@@ -160,6 +162,10 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
+
+        PhotoViewAttacher photoAttacher;
+        photoAttacher= new PhotoViewAttacher(mapImageView);
+        photoAttacher.update();
 
     }
 
