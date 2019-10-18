@@ -292,7 +292,9 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         if(running){
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-            Log.d("Chronometer", "Time:" + ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000));
+            Log.d("time", "Time:" + ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000));
+            Log.d("time", "Time:" + chronometer.getText().toString());
+            getSecondsFromDurationString(chronometer.getText().toString());
             running = false;
         }
     }
@@ -300,6 +302,30 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     private void resetChronometer() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
+    }
+
+    public static int getSecondsFromDurationString(String value){
+
+        String [] parts = value.split(":");
+
+        // Wrong format, no value for you.
+        if(parts.length < 2 || parts.length > 3)
+            return 0;
+
+        int seconds = 0, minutes = 0, hours = 0;
+
+        if(parts.length == 2){
+            seconds = Integer.parseInt(parts[1]);
+            minutes = Integer.parseInt(parts[0]);
+            Log.d("time", minutes+"m "+seconds+"s");
+        }
+        else if(parts.length == 3){
+            seconds = Integer.parseInt(parts[2]);
+            minutes = Integer.parseInt(parts[1]);
+            hours = Integer.parseInt(parts[0]);
+            Log.d("time", hours+"h "+minutes+"m "+seconds+"s");
+        }
+        return seconds + (minutes*60) + (hours*3600);
     }
     //endregion
 }
