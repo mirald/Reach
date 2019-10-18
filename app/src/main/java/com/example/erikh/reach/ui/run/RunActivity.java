@@ -47,7 +47,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
 
-public class RunActivity extends AppCompatActivity implements View.OnClickListener {
+public class RunActivity extends AppCompatActivity {
 
     Context context;
 
@@ -65,9 +65,9 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     private Chronometer chronometer;
     private long pauseOffset;
     private boolean running;
-    Button startButton;
-    Button stopButton;
-    Button resetButton;
+    //Button startButton;
+    //Button stopButton;
+    //Button resetButton;
 
     String API_key;
 
@@ -153,6 +153,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         chronometer = findViewById(R.id.chronometer);
 
         //Buttons for testing, can be removed and connect the methods to events in the app later
+        /*
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         resetButton = (Button) findViewById(R.id.resetButton);
@@ -160,7 +161,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
-
+        */
     }
 
     @Override
@@ -273,6 +274,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     //region CHRONOMETER
+    /*
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -290,6 +292,7 @@ public class RunActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+     */
 
     private void startChronometer() {
         if(!running){

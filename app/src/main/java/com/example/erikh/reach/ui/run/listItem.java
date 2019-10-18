@@ -1,10 +1,13 @@
 package com.example.erikh.reach.ui.run;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.erikh.reach.R;
@@ -33,10 +36,18 @@ public class listItem extends ArrayAdapter<Run> {
         TextView estimatedTime = (TextView) convertView.findViewById(R.id.estimatedTimeId);
         TextView location = (TextView) convertView.findViewById(R.id.locationId);
         TextView checkpointNumber = (TextView) convertView.findViewById(R.id.checkpointsId);
+        ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
         name.setText(run.getName());
         estimatedTime.setText(run.getEstimateAsString());
         location.setText(run.getLocation());
         checkpointNumber.setText(run.getNumberOfCheckpoints() + "");
+        //Gets the pic name
+        String picPath = run.GetPicPath();
+        Context context = parent.getContext();
+        int id = context.getResources().getIdentifier(picPath,"drawable","com.example.erikh.reach");
+        image.setImageResource(id);
+
+        //image.setImageDrawable(Drawable.createFromPath());
 
 
         return convertView;
