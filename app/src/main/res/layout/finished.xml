@@ -5,13 +5,21 @@
     android:id="@+id/finished"
     android:background="@color/colorPrimary"
     android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true">
+    android:layout_centerVertical="true"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Congratulations!"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Run time: "/>
 
 
 </LinearLayout>

@@ -23,12 +23,14 @@ import com.example.erikh.reach.BuildConfig;
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
 import com.example.erikh.reach.GlideApp;
+import com.example.erikh.reach.MainActivity;
 import com.example.erikh.reach.MapURL;
 import com.example.erikh.reach.NFCPermissionDialog;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Chronometer;
@@ -45,6 +47,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
 import uk.co.senab.photoview.PhotoViewAttacher;
+
+import java.util.concurrent.TimeUnit;
 
 public class RunActivity extends AppCompatActivity {
 
@@ -103,7 +107,7 @@ public class RunActivity extends AppCompatActivity {
         }
 
         else if(!nfcAdapter.isEnabled()){
-            createDialogWindow();
+            createNFCDialogWindow();
 
         } else{
             pendingIntent = PendingIntent.getActivity(this, 0,
@@ -171,6 +175,7 @@ public class RunActivity extends AppCompatActivity {
         }
 
         else if(!nfcAdapter.isEnabled()){
+//            createNFCDialogWindow();
 
         } else{
             try{
@@ -201,6 +206,20 @@ public class RunActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        createEndDialogWindow();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
+    }
+
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
 
@@ -227,7 +246,8 @@ public class RunActivity extends AppCompatActivity {
         updateMap(checkpoint);
 
         if(cRun.isFinished()){
-            stopChronometer();
+            String time = stopChronometer();
+            createFinishedDialogWindow(time);
         }
 
     }
@@ -289,13 +309,27 @@ public class RunActivity extends AppCompatActivity {
         }
     }
 
-    private void stopChronometer() {
+    private String stopChronometer() {
         if(running){
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             Log.d("Chronometer", "Time:" + ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000));
             running = false;
+
         }
+        long time = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
+        String time_as_string = "";
+        String minutes = Long.toString(time / 60);
+        String hours  = Long.toString((time * 60 )/ 24);
+        String seconds = Long.toString(time % 60);
+        if(!hours.equals("0")){
+            time_as_string = String.format("%s h ",hours);
+        }
+
+        if(!minutes.equals("0")){
+            time_as_string = time_as_string + String.format("%s m ", minutes);
+        }
+        return time_as_string + String.format("%s s", seconds);
     }
 
     private void resetChronometer() {
@@ -304,7 +338,7 @@ public class RunActivity extends AppCompatActivity {
     }
 
 
-    private void createDialogWindow(){
+    private void createNFCDialogWindow(){
         new AlertDialog.Builder(RunActivity.this)
                 .setTitle(R.string.NFC_question)
                 .setMessage(R.string.NFC_subtitle)
@@ -319,6 +353,35 @@ public class RunActivity extends AppCompatActivity {
                     }
                 })
                 .setIcon(R.drawable.ic_nfc_white_24dp)
+                .show();
+    }
+
+    private void createEndDialogWindow(){
+        new AlertDialog.Builder(RunActivity.this)
+                .setTitle(R.string.end_question)
+                .setMessage(R.string.end_subtitle)
+                .setPositiveButton(R.string.end_run, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void createFinishedDialogWindow(String timeLapsed){
+        new AlertDialog.Builder(RunActivity.this)
+                .setTitle(R.string.finished)
+                .setMessage("You finished the course in: " + timeLapsed)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
                 .show();
     }
 }

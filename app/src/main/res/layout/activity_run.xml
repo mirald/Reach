@@ -37,6 +37,6 @@
 
     <include layout="@layout/counter"/>
 
-    <include layout="@layout/finished"/>
+<!--    <include layout="@layout/finished"/>-->
 
 </RelativeLayout>
