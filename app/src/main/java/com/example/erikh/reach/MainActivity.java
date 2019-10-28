@@ -1,27 +1,55 @@
 package com.example.erikh.reach;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
 public class MainActivity extends AppCompatActivity {
 
     RunList list;
     CheckpointDatabase cDB;
+    int permsRequestCode = 200;
+    String[] perms = {"android.permission.FINE_LOCATION"};
+
+    View view;
+
+    Context context;
+
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        requestPermission();
+
+        context = getApplicationContext();
+
         cDB = CheckpointDatabase.getCheckpointDatabase();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         list = RunList.getRunList();
 
@@ -72,6 +100,62 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
+
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, permsRequestCode);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == 200) {
+            if (grantResults.length > 0) {
+
+                boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                if (locationAccepted) {
+                    Toast.makeText(context, "location request granted",
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    Snackbar.make(view, "Permission Denied, location needs to be enabled."
+                            , Snackbar.LENGTH_LONG).show();
+
+                    if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
+                        showMessageOKCancel("You need to allow access to both the permissions",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                            requestPermissions(new String[]{ACCESS_FINE_LOCATION},
+                                                    permsRequestCode);
+                                        }
+                                    }
+                                });
+                        return;
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 
 }

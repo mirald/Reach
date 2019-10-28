@@ -51,6 +51,10 @@ public class RunFragment extends Fragment {
         RunList list = RunList.getRunList();
         final ArrayList<Run> runArrayList = list.getRunArrayList();
 
+        if(locationGrated){
+            sort runArrayList
+        }
+
         listItem runs = new listItem(context, R.layout.activity_main, runArrayList);
 
         final ListView listView = view.findViewById(R.id.list_id);
