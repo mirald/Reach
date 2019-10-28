@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/chronometer"
         android:textSize="30sp"
-        android:layout_marginLeft="150dp"/>
+        android:layout_marginLeft="150dp"
+        android:visibility="invisible"/>
 
     <!-- Temporary buttons just to try the Counter -->
     <!--

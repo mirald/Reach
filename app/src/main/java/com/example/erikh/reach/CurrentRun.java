@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class CurrentRun {
     private static HashMap<Checkpoint, Boolean> map;
+    private boolean firstTag = false;
 
     public CurrentRun(ArrayList<Checkpoint> checkpoints) {
         HashMap<Checkpoint, Boolean> initMap = new HashMap<>();
@@ -23,6 +24,9 @@ public class CurrentRun {
     }
 
     public Boolean getStatus(Checkpoint checkpoints){
+        if(!firstTag){
+            firstTag = true;
+        }
         return map.get(checkpoints);
     }
 
@@ -32,5 +36,14 @@ public class CurrentRun {
 
     public static String toString(CurrentRun cRun){
         return map.toString();
+    }
+
+    public boolean isFinished(){
+        HashMap<Checkpoint, Boolean> cr = this.getCurrentRun();
+        return !cr.containsValue(false);
+    }
+
+    public boolean isFirstTag() {
+        return firstTag;
     }
 }

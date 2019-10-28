@@ -115,10 +115,10 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
-        android:text="Start run!"
+        android:text="START RUN"
         android:textAlignment="center"
         android:textColor="#FF8A65"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView2"

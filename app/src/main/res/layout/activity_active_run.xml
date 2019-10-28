@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.run.RunActivity"
-    android:id="@+id/run_activity"
+    tools:context=".ui.run.ActiveRunActivity"
+    android:id="@+id/active_run_activity"
     >
 
     <ImageView
@@ -25,15 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/info_text"
-        android:text="Scan an NFC tag to begin"
-        android:textSize="30sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="150dp"/>
 
     <include layout="@layout/counter"/>
 

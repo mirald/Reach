@@ -126,4 +126,5 @@ public class Run {
         return "Name: " + run.n + ", Location: " + run.l + ", Estimate: "+ run.e + ", picPath: " + run.p + ", " +
                 "Checkpoints: " + run.c;
     }
+
 }

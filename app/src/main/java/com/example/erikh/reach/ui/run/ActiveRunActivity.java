@@ -36,7 +36,6 @@ import android.widget.Chronometer;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.DataSource;
@@ -46,11 +45,11 @@ import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class RunActivity extends AppCompatActivity {
+public class ActiveRunActivity extends AppCompatActivity {
 
     Context context;
 
-    public static final String TAG = "RunActivity";
+    public static final String TAG = "ActiveRunActivity";
 
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
@@ -62,12 +61,8 @@ public class RunActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     private Chronometer chronometer;
-    private TextView tV;
     private long pauseOffset;
     private boolean running;
-    //Button startButton;
-    //Button stopButton;
-    //Button resetButton;
 
     String API_key;
 
@@ -82,13 +77,15 @@ public class RunActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_run);
+        setContentView(R.layout.activity_active_run);
 
         checkpoints = CheckpointDatabase.getCheckpointDatabase();
 
         context = getApplicationContext();
 
+        chronometer = findViewById(R.id.chronometer);
 
+        startChronometer();
 
         nfcDialog = new NFCPermissionDialog();
 
@@ -152,8 +149,17 @@ public class RunActivity extends AppCompatActivity {
             }
         });
 
-        tV = findViewById(R.id.info_text);
-        chronometer = findViewById(R.id.chronometer);
+
+        //Buttons for testing, can be removed and connect the methods to events in the app later
+        /*
+        startButton = (Button) findViewById(R.id.startButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
+        resetButton = (Button) findViewById(R.id.resetButton);
+
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        resetButton.setOnClickListener(this);
+        */
 
 
         PhotoViewAttacher photoAttacher;
@@ -217,18 +223,7 @@ public class RunActivity extends AppCompatActivity {
         Toast.makeText(this, "Tag " + name + " has been scanned",
                 Toast.LENGTH_SHORT).show();
 
-        if(cRun.isFirstTag()){
-            chronometer.setVisibility(View.VISIBLE);
-            tV.setVisibility(View.INVISIBLE);
-            startChronometer();
-
-        }
-
         updateMap(checkpoint);
-
-        if(cRun.isFinished()){
-            stopChronometer();
-        }
 
     }
 
@@ -258,28 +253,49 @@ public class RunActivity extends AppCompatActivity {
         Log.d(TAG, oldURL);
         GlideApp.with(con).load(mapURL)
                 .thumbnail(GlideApp
-                        .with(con)
-                        .load(oldURL)
-                        .fitCenter()
-                ).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Glide load failed");
-                return false; // thumbnail was not shown, do as usual
+                    .with(con)
+                    .load(oldURL)
+                    .fitCenter()
+            ).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "Glide load failed");
+                    return false; // thumbnail was not shown, do as usual
 
-            }
+                }
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Glide resource ready");
-                return false; // thumbnail was not shown, do as usual
-            }
-        }).into(mapIV);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "Glide resource ready");
+                    return false; // thumbnail was not shown, do as usual
+                }
+            }).into(mapIV);
         oldURL = mapURL;
         Log.d(TAG,oldURL);
     }
+
+    //region CHRONOMETER
+    /*
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.startButton: {
+                startChronometer();
+                break;
+            }
+            case R.id.stopButton:{
+                stopChronometer();
+                break;
+            }
+            case R.id.resetButton: {
+                resetChronometer();
+                break;
+            }
+        }
+    }
+     */
 
     private void startChronometer() {
         if(!running){
@@ -305,7 +321,7 @@ public class RunActivity extends AppCompatActivity {
 
 
     private void createDialogWindow(){
-        new AlertDialog.Builder(RunActivity.this)
+        new AlertDialog.Builder(ActiveRunActivity.this)
                 .setTitle(R.string.NFC_question)
                 .setMessage(R.string.NFC_subtitle)
                 .setPositiveButton(R.string.enable_nfc, new DialogInterface.OnClickListener() {
