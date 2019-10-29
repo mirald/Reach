@@ -36,20 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
 
-    LocationManager locationManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        requestPermission();
-
         context = getApplicationContext();
 
         cDB = CheckpointDatabase.getCheckpointDatabase();
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         list = RunList.getRunList();
 
@@ -102,60 +96,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    private boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
-
-        return result == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermission() {
-
-        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, permsRequestCode);
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == 200) {
-            if (grantResults.length > 0) {
-
-                boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-                if (locationAccepted) {
-                    Toast.makeText(context, "location request granted",
-                            Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    Snackbar.make(view, "Permission Denied, location needs to be enabled."
-                            , Snackbar.LENGTH_LONG).show();
-
-                    if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-                        showMessageOKCancel("You need to allow access to both the permissions",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                            requestPermissions(new String[]{ACCESS_FINE_LOCATION},
-                                                    permsRequestCode);
-                                        }
-                                    }
-                                });
-                        return;
-                    }
-
-                }
-            }
-        }
-    }
-
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(MainActivity.this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
-                .create()
-                .show();
-    }
 
 }
