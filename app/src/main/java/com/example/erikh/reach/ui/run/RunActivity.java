@@ -1,5 +1,6 @@
 package com.example.erikh.reach.ui.run;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -26,6 +27,7 @@ import com.example.erikh.reach.GlideApp;
 import com.example.erikh.reach.MainActivity;
 import com.example.erikh.reach.MapURL;
 import com.example.erikh.reach.NFCPermissionDialog;
+import com.example.erikh.reach.PassedRuns;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
@@ -37,6 +39,7 @@ import android.widget.Chronometer;
 
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +49,10 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
+import com.example.erikh.reach.UserInfo;
+
+import org.w3c.dom.Text;
+
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.util.concurrent.TimeUnit;
@@ -69,9 +76,6 @@ public class RunActivity extends AppCompatActivity {
     private TextView tV;
     private long pauseOffset;
     private boolean running;
-    //Button startButton;
-    //Button stopButton;
-    //Button resetButton;
 
     String API_key;
 
@@ -83,6 +87,17 @@ public class RunActivity extends AppCompatActivity {
 
     NFCPermissionDialog nfcDialog;
 
+    TextView estimatedTime, totalCheckpoints;
+    String name;
+
+    UserInfo userInfo;
+
+    LinearLayout remainingCheckpoints, info;
+
+    TextView numberOfRemainingCheckpoints;
+
+    int remCheck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +107,22 @@ public class RunActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
+        userInfo = UserInfo.getInstance();
 
+        name = run.getName();
+
+        getSupportActionBar().setTitle(name);
+
+        estimatedTime = (TextView) findViewById(R.id.estimated_time);
+        totalCheckpoints = (TextView) findViewById(R.id.nr_of_checkpoints);
+
+        remCheck = run.getNumberOfCheckpoints();
+
+        estimatedTime.setText("Estimated time: " + run.getEstimateAsString());
+        totalCheckpoints.setText("Checkpoints: " + remCheck);
 
         nfcDialog = new NFCPermissionDialog();
 
-
-//        textView = (TextView) findViewById(R.id.NFC_info);
         NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
         nfcAdapter = manager.getDefaultAdapter();
 
@@ -129,12 +154,8 @@ public class RunActivity extends AppCompatActivity {
         mapImageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                //Remove it here unless you want to get this callback for EVERY
-                //layout pass, which can get you into infinite loops if you ever
-                //modify the layout from within this method.
                 mapImageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                //Now you can get the width and height from content
                 height = mapImageView.getHeight();
                 width = mapImageView.getWidth();
 
@@ -158,6 +179,10 @@ public class RunActivity extends AppCompatActivity {
 
         tV = findViewById(R.id.info_text);
         chronometer = findViewById(R.id.chronometer);
+        remainingCheckpoints = findViewById(R.id.remCheck);
+        info = findViewById(R.id.info);
+
+        numberOfRemainingCheckpoints = findViewById(R.id.remaining_checkpoints);
 
 
         PhotoViewAttacher photoAttacher;
@@ -208,7 +233,11 @@ public class RunActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        createEndDialogWindow();
+        if(running){
+            createEndDialogWindow();
+        } else{
+            finish();
+        }
     }
 
     @Override
@@ -236,9 +265,18 @@ public class RunActivity extends AppCompatActivity {
         Toast.makeText(this, "Tag " + name + " has been scanned",
                 Toast.LENGTH_SHORT).show();
 
+        if(remCheck > 0){
+            remCheck --;
+        }
+
+
+        numberOfRemainingCheckpoints.setText("Remaining checkpoints: " +remCheck);
+
         if(cRun.isFirstTag()){
             chronometer.setVisibility(View.VISIBLE);
             tV.setVisibility(View.INVISIBLE);
+            info.setVisibility(View.INVISIBLE);
+            remainingCheckpoints.setVisibility(View.VISIBLE);
             startChronometer();
 
         }
@@ -317,19 +355,23 @@ public class RunActivity extends AppCompatActivity {
             running = false;
 
         }
-        long time = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000;
+        long time = SystemClock.elapsedRealtime() - chronometer.getBase();
+
         String time_as_string = "";
-        String minutes = Long.toString(time / 60);
-        String hours  = Long.toString((time * 60 )/ 24);
-        String seconds = Long.toString(time % 60);
-        if(!hours.equals("0")){
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(time)%60;
+        long hours  = TimeUnit.MILLISECONDS.toHours(time);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(time)%60;
+        if(!(hours == 0)){
             time_as_string = String.format("%s h ",hours);
         }
 
-        if(!minutes.equals("0")){
+        if(!(minutes==0)){
             time_as_string = time_as_string + String.format("%s m ", minutes);
         }
-        return time_as_string + String.format("%s s", seconds);
+
+        time_as_string = time_as_string + String.format("%s s", seconds);
+        userInfo.addListPassedRuns(new PassedRuns(run.getName(), time_as_string));
+        return time_as_string;
     }
 
     private void resetChronometer() {

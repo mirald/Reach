@@ -11,13 +11,6 @@ public class PassedRuns {
         this.name = name;
     }
 
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
 
     public String getTime() {
         return time;
@@ -28,16 +21,14 @@ public class PassedRuns {
     }
 
     String name;
-    String length;
     String time;
 
 
 
 
 
-    public PassedRuns(String name, String length, String time) {
+    public PassedRuns(String name, String time) {
         this.name = name;
-        this.length = length;
         this.time = time;
 
     }
@@ -45,7 +36,6 @@ public class PassedRuns {
     public PassedRuns() {
 
         this.name = null;
-        this.length = null;
         this.time = null;
 
     }
