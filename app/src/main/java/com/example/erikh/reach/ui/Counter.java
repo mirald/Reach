@@ -27,7 +27,7 @@ public class Counter extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_run);
+        setContentView(R.layout.activity_active_run);
 
         chronometer = findViewById(R.id.chronometer);
 

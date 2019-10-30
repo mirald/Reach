@@ -2,6 +2,7 @@ package com.example.erikh.reach.ui.run;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,9 @@ public class RunFragment extends Fragment {
     private RunViewModel runViewModel;
 
     Context context;
+
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

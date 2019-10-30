@@ -1,5 +1,6 @@
 package com.example.erikh.reach;
 
+<<<<<<< HEAD
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -13,17 +14,37 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+=======
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+>>>>>>> a28872742ffd74c264dba0c8d493af1c3dd6b964
 
 import com.example.erikh.reach.ui.run.RunFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+<<<<<<< HEAD
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.IntentCompat;
+=======
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+>>>>>>> a28872742ffd74c264dba0c8d493af1c3dd6b964
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,6 +57,12 @@ public class MainActivity extends AppCompatActivity  {
 
     RunList list;
     CheckpointDatabase cDB;
+    int permsRequestCode = 200;
+    String[] perms = {"android.permission.FINE_LOCATION"};
+
+    View view;
+
+    Context context;
 
     private FusedLocationProviderClient client;
 
@@ -58,6 +85,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+        context = getApplicationContext();
 
         cDB = CheckpointDatabase.getCheckpointDatabase();
 
@@ -175,9 +203,12 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> a28872742ffd74c264dba0c8d493af1c3dd6b964
 }
 

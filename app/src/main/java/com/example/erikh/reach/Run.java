@@ -52,13 +52,13 @@ public class Run {
 
         String tempString = "";
         if(!timeArray[0].equals("00")){
-            tempString += timeArray[0] + " hours ";
+            tempString += timeArray[0] + " h ";
         }
         if(!timeArray[1].equals("00")){
-            tempString += timeArray[1] + " min ";
+            tempString += timeArray[1] + " m ";
         }
         if(!timeArray[2].equals("00")){
-            tempString += timeArray[2] + " sec ";
+            tempString += timeArray[2] + " s ";
         }
         return tempString;
 
@@ -126,4 +126,5 @@ public class Run {
         return "Name: " + run.n + ", Location: " + run.l + ", Estimate: "+ run.e + ", picPath: " + run.p + ", " +
                 "Checkpoints: " + run.c;
     }
+
 }

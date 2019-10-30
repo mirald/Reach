@@ -1,6 +1,5 @@
 package com.example.erikh.reach.ui.run;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,24 +23,19 @@ import com.example.erikh.reach.BuildConfig;
 import com.example.erikh.reach.Checkpoint;
 import com.example.erikh.reach.CurrentRun;
 import com.example.erikh.reach.GlideApp;
-import com.example.erikh.reach.MainActivity;
 import com.example.erikh.reach.MapURL;
 import com.example.erikh.reach.NFCPermissionDialog;
-import com.example.erikh.reach.PassedRuns;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
-import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Chronometer;
 
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.DataSource;
@@ -49,19 +43,13 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.erikh.reach.Run;
-import com.example.erikh.reach.UserInfo;
-
-import org.w3c.dom.Text;
-
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-import java.util.concurrent.TimeUnit;
-
-public class RunActivity extends AppCompatActivity {
+public class ActiveRunActivity extends AppCompatActivity {
 
     Context context;
 
-    public static final String TAG = "RunActivity";
+    public static final String TAG = "ActiveRunActivity";
 
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
@@ -73,7 +61,6 @@ public class RunActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     private Chronometer chronometer;
-    private TextView tV;
     private long pauseOffset;
     private boolean running;
 
@@ -87,42 +74,23 @@ public class RunActivity extends AppCompatActivity {
 
     NFCPermissionDialog nfcDialog;
 
-    TextView estimatedTime, totalCheckpoints;
-    String name;
-
-    UserInfo userInfo;
-
-    LinearLayout remainingCheckpoints, info;
-
-    TextView numberOfRemainingCheckpoints;
-
-    int remCheck;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_run);
+        setContentView(R.layout.activity_active_run);
 
         checkpoints = CheckpointDatabase.getCheckpointDatabase();
 
         context = getApplicationContext();
 
-        userInfo = UserInfo.getInstance();
+        chronometer = findViewById(R.id.chronometer);
 
-        name = run.getName();
-
-        getSupportActionBar().setTitle(name);
-
-        estimatedTime = (TextView) findViewById(R.id.estimated_time);
-        totalCheckpoints = (TextView) findViewById(R.id.nr_of_checkpoints);
-
-        remCheck = run.getNumberOfCheckpoints();
-
-        estimatedTime.setText("Estimated time: " + run.getEstimateAsString());
-        totalCheckpoints.setText("Checkpoints: " + remCheck);
+        startChronometer();
 
         nfcDialog = new NFCPermissionDialog();
 
+
+//        textView = (TextView) findViewById(R.id.NFC_info);
         NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
         nfcAdapter = manager.getDefaultAdapter();
 
@@ -132,7 +100,7 @@ public class RunActivity extends AppCompatActivity {
         }
 
         else if(!nfcAdapter.isEnabled()){
-            createNFCDialogWindow();
+            createDialogWindow();
 
         } else{
             pendingIntent = PendingIntent.getActivity(this, 0,
@@ -154,8 +122,12 @@ public class RunActivity extends AppCompatActivity {
         mapImageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                //Remove it here unless you want to get this callback for EVERY
+                //layout pass, which can get you into infinite loops if you ever
+                //modify the layout from within this method.
                 mapImageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
+                //Now you can get the width and height from content
                 height = mapImageView.getHeight();
                 width = mapImageView.getWidth();
 
@@ -177,12 +149,17 @@ public class RunActivity extends AppCompatActivity {
             }
         });
 
-        tV = findViewById(R.id.info_text);
-        chronometer = findViewById(R.id.chronometer);
-        remainingCheckpoints = findViewById(R.id.remCheck);
-        info = findViewById(R.id.info);
 
-        numberOfRemainingCheckpoints = findViewById(R.id.remaining_checkpoints);
+        //Buttons for testing, can be removed and connect the methods to events in the app later
+        /*
+        startButton = (Button) findViewById(R.id.startButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
+        resetButton = (Button) findViewById(R.id.resetButton);
+
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        resetButton.setOnClickListener(this);
+        */
 
 
         PhotoViewAttacher photoAttacher;
@@ -200,7 +177,6 @@ public class RunActivity extends AppCompatActivity {
         }
 
         else if(!nfcAdapter.isEnabled()){
-//            createNFCDialogWindow();
 
         } else{
             try{
@@ -231,24 +207,6 @@ public class RunActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if(running){
-            createEndDialogWindow();
-        } else{
-            finish();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return false;
-    }
-
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
 
@@ -265,28 +223,7 @@ public class RunActivity extends AppCompatActivity {
         Toast.makeText(this, "Tag " + name + " has been scanned",
                 Toast.LENGTH_SHORT).show();
 
-        if(remCheck > 0){
-            remCheck --;
-        }
-
-
-        numberOfRemainingCheckpoints.setText("Remaining checkpoints: " +remCheck);
-
-        if(cRun.isFirstTag()){
-            chronometer.setVisibility(View.VISIBLE);
-            tV.setVisibility(View.INVISIBLE);
-            info.setVisibility(View.INVISIBLE);
-            remainingCheckpoints.setVisibility(View.VISIBLE);
-            startChronometer();
-
-        }
-
         updateMap(checkpoint);
-
-        if(cRun.isFinished()){
-            String time = stopChronometer();
-            createFinishedDialogWindow(time);
-        }
 
     }
 
@@ -316,28 +253,49 @@ public class RunActivity extends AppCompatActivity {
         Log.d(TAG, oldURL);
         GlideApp.with(con).load(mapURL)
                 .thumbnail(GlideApp
-                        .with(con)
-                        .load(oldURL)
-                        .fitCenter()
-                ).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Glide load failed");
-                return false; // thumbnail was not shown, do as usual
+                    .with(con)
+                    .load(oldURL)
+                    .fitCenter()
+            ).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "Glide load failed");
+                    return false; // thumbnail was not shown, do as usual
 
-            }
+                }
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "Glide resource ready");
-                return false; // thumbnail was not shown, do as usual
-            }
-        }).into(mapIV);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "Glide resource ready");
+                    return false; // thumbnail was not shown, do as usual
+                }
+            }).into(mapIV);
         oldURL = mapURL;
         Log.d(TAG,oldURL);
     }
+
+    //region CHRONOMETER
+    /*
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.startButton: {
+                startChronometer();
+                break;
+            }
+            case R.id.stopButton:{
+                stopChronometer();
+                break;
+            }
+            case R.id.resetButton: {
+                resetChronometer();
+                break;
+            }
+        }
+    }
+     */
 
     private void startChronometer() {
         if(!running){
@@ -347,31 +305,13 @@ public class RunActivity extends AppCompatActivity {
         }
     }
 
-    private String stopChronometer() {
+    private void stopChronometer() {
         if(running){
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             Log.d("Chronometer", "Time:" + ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000));
             running = false;
-
         }
-        long time = SystemClock.elapsedRealtime() - chronometer.getBase();
-
-        String time_as_string = "";
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(time)%60;
-        long hours  = TimeUnit.MILLISECONDS.toHours(time);
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(time)%60;
-        if(!(hours == 0)){
-            time_as_string = String.format("%s h ",hours);
-        }
-
-        if(!(minutes==0)){
-            time_as_string = time_as_string + String.format("%s m ", minutes);
-        }
-
-        time_as_string = time_as_string + String.format("%s s", seconds);
-        userInfo.addListPassedRuns(new PassedRuns(run.getName(), time_as_string));
-        return time_as_string;
     }
 
     private void resetChronometer() {
@@ -380,8 +320,8 @@ public class RunActivity extends AppCompatActivity {
     }
 
 
-    private void createNFCDialogWindow(){
-        new AlertDialog.Builder(RunActivity.this)
+    private void createDialogWindow(){
+        new AlertDialog.Builder(ActiveRunActivity.this)
                 .setTitle(R.string.NFC_question)
                 .setMessage(R.string.NFC_subtitle)
                 .setPositiveButton(R.string.enable_nfc, new DialogInterface.OnClickListener() {
@@ -395,35 +335,6 @@ public class RunActivity extends AppCompatActivity {
                     }
                 })
                 .setIcon(R.drawable.ic_nfc_white_24dp)
-                .show();
-    }
-
-    private void createEndDialogWindow(){
-        new AlertDialog.Builder(RunActivity.this)
-                .setTitle(R.string.end_question)
-                .setMessage(R.string.end_subtitle)
-                .setPositiveButton(R.string.end_run, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
-
-    private void createFinishedDialogWindow(String timeLapsed){
-        new AlertDialog.Builder(RunActivity.this)
-                .setTitle(R.string.finished)
-                .setMessage("You finished the course in: " + timeLapsed)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
                 .show();
     }
 }

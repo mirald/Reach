@@ -10,26 +10,28 @@ public class UserInfo {
         return the_list;
     }
 
-    public ArrayList<PassedRuns> listPassedRuns = new ArrayList<PassedRuns>();
+    public static ArrayList<PassedRuns> listPassedRuns;
 
-    PassedRuns Run1 = new PassedRuns("Slottsskogen", "23 km", "22 min");
+    PassedRuns Run1 = new PassedRuns("Slottsskogen", "22 m 0 s");
 
 
-    //Used to set the Header on the profile view
-    public int getRunKm (){
-        //return runKm;
-        int tempKm = 0;
-        for (PassedRuns pr : listPassedRuns){
-            //Gets all the ints from the length string
-            tempKm += Integer.parseInt(pr.length.replaceAll("\\D+",""));
-        }
-        return tempKm;
-    }
+//    //Used to set the Header on the profile view
+//    public int getRunKm (){
+//        //return runKm;
+//        int tempKm = 0;
+//        for (PassedRuns pr : listPassedRuns){
+//            //Gets all the ints from the length string
+//            tempKm += Integer.parseInt(pr.length.replaceAll("\\D+",""));
+//        }
+//        return tempKm;
+//    }
 
 
     private UserInfo(){
 
-        listPassedRuns.add(Run1);
+        listPassedRuns = new ArrayList<PassedRuns>();
+
+        addListPassedRuns(Run1);
         //Adds a shit ton of runs
         /*
         for(int i = 0; i < 9; i++){
@@ -42,5 +44,9 @@ public class UserInfo {
 
     public ArrayList<PassedRuns> getListPassedRuns() {
         return listPassedRuns;
+    }
+
+    public void addListPassedRuns(PassedRuns p) {
+        listPassedRuns.add(0, p);
     }
 }

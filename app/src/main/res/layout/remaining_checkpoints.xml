@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/current_run_info"
+    android:background="@color/colorPrimaryDark"
+    android:layout_centerHorizontal="true"
+    android:padding="8dp"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/remaining_checkpoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remaining checkpoints: "
+        android:padding="@dimen/small_margins"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        />
+
+
+</LinearLayout>

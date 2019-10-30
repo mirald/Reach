@@ -8,24 +8,75 @@
     android:id="@+id/run_activity"
     >
 
-    <ImageView
-        android:id="@+id/map_image"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="image of map"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:scaleType="fitXY"
-        />
+        android:layout_above="@id/timer">
+        <ImageView
+            android:id="@+id/map_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="image of map"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"/>
+        android:background="@color/colorPrimary"
+        android:layout_above="@id/info">
 
-    <include layout="@layout/counter"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_text"
+            android:text="Scan an NFC tag to begin"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:padding="@dimen/medium_margins"
+            android:textColor="@android:color/white"/>
+
+        <Chronometer
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chronometer"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:padding="@dimen/medium_margins"
+            android:visibility="invisible"
+            android:textColor="@android:color/white"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/current_run_info"
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"/>
+
+    <include layout="@layout/remaining_checkpoints"
+        android:id="@+id/remCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"/>
 
 </RelativeLayout>
