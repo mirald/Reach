@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:drawable/dialog_holo_light_frame"
@@ -8,135 +8,59 @@
     android:layout_marginEnd="-8dp"
     android:paddingTop="@dimen/medium_margins"
     android:paddingBottom="@dimen/medium_margins"
-    android:weightSum="4"
+    android:weightSum="6"
     >
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nameid2"
-        android:textSize="20sp"
-        android:text="Test Name"
-        android:layout_weight="2"
+        android:id="@+id/date"
+        android:text="date"
         android:paddingRight="@dimen/medium_margins"
         android:paddingLeft="@dimen/medium_margins"
         android:paddingBottom="@dimen/small_margins"
         android:paddingTop="@dimen/small_margins"
         />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/time"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:text="Time: "
-        />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timeid"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        />
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameid2"
+            android:textSize="20sp"
+            android:text="Test Name"
+            android:layout_weight="3"
+            android:paddingLeft="@dimen/medium_margins"
+            android:paddingBottom="@dimen/small_margins"
+            android:paddingTop="@dimen/small_margins"
+            android:textStyle="bold"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            android:textSize="16sp"
+            android:text="Time: "
+            android:textAlignment="textStart"
+            android:layout_weight="1"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeid"
+            android:textSize="16sp"
+            android:text="20 m 12 s"
+            android:layout_weight="2"
+
+            />
+
+    </LinearLayout>
 
 
-<!--    <TableRow-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:paddingBottom="@dimen/small_margins"-->
-<!--        android:paddingTop="@dimen/small_margins"-->
-<!--        >-->
-<!--        <androidx.appcompat.widget.AppCompatTextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/name"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="20sp"-->
-<!--            />-->
-
-<!--        <androidx.appcompat.widget.AppCompatTextView-->
-<!--            android:id="@+id/nameid2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textStyle="bold"/>-->
-<!--    </TableRow>-->
-
-<!--    <TableRow-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="-24dp"-->
-<!--        android:layout_marginStart="200dp"-->
-<!--        android:paddingBottom="@dimen/small_margins"-->
-<!--        android:paddingTop="@dimen/small_margins">-->
-<!--        <androidx.appcompat.widget.AppCompatTextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/time"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="16sp"-->
-<!--            android:text="Time: "-->
-<!--            />-->
-<!--        <androidx.appcompat.widget.AppCompatTextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/timeid"-->
-<!--            android:layout_marginStart="13dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="16sp"-->
-<!--            />-->
-<!--    </TableRow>-->
-
-<!--    <TableRow-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="12sp"-->
-<!--        android:layout_marginStart="200dp">-->
-<!--        <androidx.appcompat.widget.AppCompatTextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/length"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="12sp"-->
-<!--            android:text="Length: "-->
-<!--            />-->
-<!--        <androidx.appcompat.widget.AppCompatTextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/lengthId"-->
-<!--            android:layout_marginStart="3dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textSize="12sp"-->
-<!--            />-->
-<!--    </TableRow>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:background="@android:drawable/dialog_holo_light_frame"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:translationZ="-2dp"-->
-<!--        android:layout_marginTop="-90dp"-->
-<!--        android:layout_marginStart="-8dp"-->
-<!--        android:layout_marginEnd="-8dp"-->
-<!--        />-->
 
 </LinearLayout>

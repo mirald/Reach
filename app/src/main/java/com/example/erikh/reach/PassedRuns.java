@@ -1,7 +1,30 @@
 package com.example.erikh.reach;
 
+import java.util.Date;
+
 public class PassedRuns {
 
+    String name;
+    String time;
+    Date date;
+
+
+
+
+
+    public PassedRuns(String name, String time, Date date) {
+        this.name = name;
+        this.time = time;
+        this.date = date;
+
+    }
+
+    public PassedRuns() {
+
+        this.name = null;
+        this.time = null;
+        this.date = null;
+    }
 
     public String getName() {
         return name;
@@ -20,24 +43,15 @@ public class PassedRuns {
         this.time = time;
     }
 
-    String name;
-    String time;
-
-
-
-
-
-    public PassedRuns(String name, String time) {
-        this.name = name;
-        this.time = time;
-
+    public String getDate(){
+        String day = Integer.toString(date.getDate());
+        String month = Integer.toString(date.getMonth());
+        String year = Integer.toString(date.getYear());
+        return day + "/" + month + "/" + year;
     }
 
-    public PassedRuns() {
-
-        this.name = null;
-        this.time = null;
-
+    public void setDate(Date date) {
+        this.date = date;
     }
 
 
