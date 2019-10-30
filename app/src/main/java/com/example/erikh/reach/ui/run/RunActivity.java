@@ -56,6 +56,7 @@ import org.w3c.dom.Text;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class RunActivity extends AppCompatActivity {
@@ -373,7 +374,7 @@ public class RunActivity extends AppCompatActivity {
         }
 
         time_as_string = time_as_string + String.format("%s s", seconds);
-        userInfo.addListPassedRuns(new PassedRuns(run.getName(), time_as_string));
+        userInfo.addListPassedRuns(new PassedRuns(run.getName(), time_as_string, new Date()));
         return time_as_string;
     }
 

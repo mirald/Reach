@@ -8,7 +8,7 @@
     android:layout_marginEnd="-8dp"
     android:paddingTop="@dimen/medium_margins"
     android:paddingBottom="@dimen/medium_margins"
-    android:weightSum="4"
+    android:weightSum="6"
     >
 
     <TextView
@@ -28,13 +28,12 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/nameid2"
             android:textSize="20sp"
             android:text="Test Name"
-            android:layout_weight="2"
-            android:paddingRight="@dimen/medium_margins"
+            android:layout_weight="3"
             android:paddingLeft="@dimen/medium_margins"
             android:paddingBottom="@dimen/small_margins"
             android:paddingTop="@dimen/small_margins"
@@ -42,19 +41,22 @@
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/time"
             android:textSize="16sp"
             android:text="Time: "
+            android:textAlignment="textStart"
             android:layout_weight="1"
             />
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/timeid"
             android:textSize="16sp"
-            android:layout_weight="1"
+            android:text="20 m 12 s"
+            android:layout_weight="2"
+
             />
 
     </LinearLayout>

@@ -11,6 +11,8 @@ import com.example.erikh.reach.PassedRuns;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.Run;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class runedListItem extends ArrayAdapter<PassedRuns> {
@@ -33,8 +35,10 @@ public class runedListItem extends ArrayAdapter<PassedRuns> {
 
         TextView name = (TextView) convertView.findViewById(R.id.nameid2);
         TextView time = (TextView) convertView.findViewById(R.id.timeid);
+        TextView date = (TextView) convertView.findViewById(R.id.date);
         name.setText(run.getName());
         time.setText(run.getTime());
+        date.setText(run.getDate());
 
 
         return convertView;

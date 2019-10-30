@@ -1,6 +1,8 @@
 package com.example.erikh.reach;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class UserInfo {
 
@@ -12,7 +14,7 @@ public class UserInfo {
 
     public static ArrayList<PassedRuns> listPassedRuns;
 
-    PassedRuns Run1 = new PassedRuns("Slottsskogen", "22 m 0 s");
+    PassedRuns Run1 = new PassedRuns("Slottsskogen", "22 m 0 s", new Date(2019, 10, 20));
 
 
 //    //Used to set the Header on the profile view
