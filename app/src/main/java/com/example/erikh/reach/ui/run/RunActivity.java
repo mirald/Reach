@@ -256,38 +256,44 @@ public class RunActivity extends AppCompatActivity {
         byte[] tagID = tag.getId();
 
         serialNumber = byteToHex(tagID);
+        boolean exists = false;
 
         Log.d(TAG, "Byte array: " + serialNumber);
 
         Checkpoint checkpoint = checkpoints.getCheckpointFromSerial(serialNumber.trim());
+        exists = cRun.getCurrentRun().containsKey(checkpoint);
         String name = checkpoint.getName();
-        Log.d(TAG, name);
-        Toast.makeText(this, "Tag " + name + " has been scanned",
-                Toast.LENGTH_SHORT).show();
+        if(exists) {
+            Log.d(TAG, name);
+            Toast.makeText(this, "Tag " + name + " has been scanned",
+                    Toast.LENGTH_SHORT).show();
 
-        if(remCheck > 0){
-            remCheck --;
+            if (remCheck > 0) {
+                remCheck--;
+            }
+
+
+            numberOfRemainingCheckpoints.setText("Remaining checkpoints: " + remCheck);
+
+            if (cRun.isFirstTag()) {
+                chronometer.setVisibility(View.VISIBLE);
+                tV.setVisibility(View.INVISIBLE);
+                info.setVisibility(View.INVISIBLE);
+                remainingCheckpoints.setVisibility(View.VISIBLE);
+                startChronometer();
+
+            }
+
+            updateMap(checkpoint);
+
+            if (cRun.isFinished()) {
+                String time = stopChronometer();
+                createFinishedDialogWindow(time);
+            }
+        } else{
+            Toast.makeText(this, "This tag is not part of the map",
+                    Toast.LENGTH_SHORT).show();
         }
-
-
-        numberOfRemainingCheckpoints.setText("Remaining checkpoints: " +remCheck);
-
-        if(cRun.isFirstTag()){
-            chronometer.setVisibility(View.VISIBLE);
-            tV.setVisibility(View.INVISIBLE);
-            info.setVisibility(View.INVISIBLE);
-            remainingCheckpoints.setVisibility(View.VISIBLE);
-            startChronometer();
-
-        }
-
-        updateMap(checkpoint);
-
-        if(cRun.isFinished()){
-            String time = stopChronometer();
-            createFinishedDialogWindow(time);
-        }
-
     }
 
     private String byteToHex(byte[] byteArray){
