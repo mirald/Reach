@@ -33,10 +33,8 @@ public class runedListItem extends ArrayAdapter<PassedRuns> {
 
         TextView name = (TextView) convertView.findViewById(R.id.nameid2);
         TextView time = (TextView) convertView.findViewById(R.id.timeid);
-        TextView length = (TextView) convertView.findViewById(R.id.lengthId);
         name.setText(run.getName());
         time.setText(run.getTime());
-        length.setText(run.getLength());
 
 
         return convertView;

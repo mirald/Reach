@@ -9,4 +9,14 @@
     <string name="enable_nfc">ENABLE</string>
     <string name="NFC_question">Do you want to enable NFC?</string>
     <string name="NFC_subtitle">NFC is needed to use this function.</string>
+
+    <string name="end_question">End run?</string>
+    <string name="end_subtitle">Your time will not be saved.</string>
+    <string name="end_run">END RUN</string>
+
+    <string name="finished">Congratulations!</string>
+    <string name="time">You have finished this run in:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

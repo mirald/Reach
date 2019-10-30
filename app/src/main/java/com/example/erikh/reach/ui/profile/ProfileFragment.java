@@ -28,17 +28,17 @@ public class ProfileFragment extends Fragment {
     private ProfileViewModel profileViewModel;
 
     Context context;
-
-
+    UserInfo user;
+    int numberOfRuns;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         context = getContext();
 
-        UserInfo user = UserInfo.getInstance();
+        user = UserInfo.getInstance();
 
-        final int km = user.getRunKm();
+        numberOfRuns = user.getListPassedRuns().size();
 
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
@@ -63,7 +63,11 @@ public class ProfileFragment extends Fragment {
         profileViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText("You’ve run a total of " + km + "" + " km");
+                String runs = " runs";
+                if(numberOfRuns==1){
+                    runs = " run";
+                }
+                textView.setText("You’ve completed " + Integer.toString(numberOfRuns) + runs);
 
             }
         });

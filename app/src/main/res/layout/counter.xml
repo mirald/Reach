@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="top"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
     android:layout_gravity="center"
     android:orientation="vertical">
 
@@ -10,30 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chronometer"
-        android:textSize="30sp"
-        android:layout_marginLeft="150dp"/>
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:padding="@dimen/medium_margins"
+        android:visibility="invisible"/>
 
-    <!-- Temporary buttons just to try the Counter -->
-    <!--
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="StartTest"
-        android:id="@+id/startButton"
-        android:layout_marginLeft="150dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="StopTest"
-        android:id="@+id/stopButton"
-        android:layout_marginLeft="150dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ResetTest"
-        android:id="@+id/resetButton"
-        android:layout_marginLeft="150dp"/>
-    -->
 </LinearLayout>

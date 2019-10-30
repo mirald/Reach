@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.erikh.reach">
-
+    <!-- Only phones with NFC will be able to download the app form the play store -->
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.nfc" -->
+    <!-- android:required="true" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,17 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.run.RunActivity"
+        <activity android:name=".ui.run.ActiveRunActivity"></activity>
+        <activity
+            android:name=".ui.run.RunActivity"
             android:networkSecurityConfig="@xml/network_security_config">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
             <intent-filter>
                 <action android:name="android.nfc.action.ACTION_NDEF_DISCOVERED" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
@@ -30,13 +35,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application> <!-- Only phones with NFC will be able to download the app form the play store -->
-<!--    <uses-feature-->
-<!--        android:name="android.hardware.nfc"-->
-<!--        android:required="true" />-->
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
 </manifest>
