@@ -33,6 +33,8 @@ public class RunFragment extends Fragment {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
 
+    public static listItem runs;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         runViewModel =
@@ -55,16 +57,12 @@ public class RunFragment extends Fragment {
         RunList list = RunList.getRunList();
         final ArrayList<Run> runArrayList = list.getRunArrayList();
 
-        listItem runs = new listItem(context, R.layout.activity_main, runArrayList);
+        runs = new listItem(context, R.layout.activity_main, runArrayList);
 
         final ListView listView = view.findViewById(R.id.list_id);
         listView.setAdapter(runs);
 
 
-
-
-
-        //TODO: Create a new view for when clicking a list element
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,22 +72,6 @@ public class RunFragment extends Fragment {
                 RunFragment.this.startActivity(myIntent);
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
