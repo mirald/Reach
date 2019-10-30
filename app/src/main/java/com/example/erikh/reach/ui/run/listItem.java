@@ -40,6 +40,10 @@ public class listItem extends ArrayAdapter<Run> {
         TextView location = (TextView) convertView.findViewById(R.id.locationId);
         TextView checkpointNumber = (TextView) convertView.findViewById(R.id.checkpointsId);
         TextView closestCheckpoint = (TextView) convertView.findViewById(R.id.closestId);
+        TextView textCheckpoint = (TextView) convertView.findViewById(R.id.closest);
+
+        textCheckpoint.setVisibility(View.INVISIBLE);
+
         ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
         
         name.setText(run.getName());
@@ -48,7 +52,15 @@ public class listItem extends ArrayAdapter<Run> {
         checkpointNumber.setText(run.getNumberOfCheckpoints() + "");
 
         float[] tempArr = new float[]{MainActivity.xcord, MainActivity.ycord};
-        closestCheckpoint.setText(CheckpointDatabase.getCheckpointDatabase().getClosestCheckpoint(tempArr).getName());
+
+        if(MainActivity.locationAccepted == true){
+            closestCheckpoint.setText(CheckpointDatabase.getCheckpointDatabase().getClosestCheckpoint(tempArr, run).getName());
+            textCheckpoint.setVisibility(View.VISIBLE);
+        }
+
+
+
+
         Log.d("Hejhoj", "getView: ");
 
         //Gets the pic name

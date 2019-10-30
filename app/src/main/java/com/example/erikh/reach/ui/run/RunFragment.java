@@ -56,6 +56,10 @@ public class RunFragment extends Fragment {
         final ListView listView = view.findViewById(R.id.list_id);
         listView.setAdapter(runs);
 
+
+
+
+
         //TODO: Create a new view for when clicking a list element
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,6 +70,21 @@ public class RunFragment extends Fragment {
                 RunFragment.this.startActivity(myIntent);
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
