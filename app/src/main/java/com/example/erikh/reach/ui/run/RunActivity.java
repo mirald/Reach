@@ -32,6 +32,7 @@ import com.example.erikh.reach.R;
 import com.example.erikh.reach.CheckpointDatabase;
 
 import android.nfc.NfcAdapter;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -127,8 +128,7 @@ public class RunActivity extends AppCompatActivity {
         nfcAdapter = manager.getDefaultAdapter();
 
         if(nfcAdapter == null){
-            Toast.makeText(this, "The app requires NFC to perform that action",
-                    Toast.LENGTH_LONG).show();
+            showToast("This application requires NFC", "long");
         }
 
         else if(!nfcAdapter.isEnabled()){
@@ -195,8 +195,7 @@ public class RunActivity extends AppCompatActivity {
         super.onResume();
 
         if(nfcAdapter == null){
-            Toast.makeText(this, "The app requires NFC support to perform that action",
-                    Toast.LENGTH_LONG).show();
+            showToast("This application requires NFC", "long");
         }
 
         else if(!nfcAdapter.isEnabled()){
@@ -220,8 +219,7 @@ public class RunActivity extends AppCompatActivity {
         super.onPause();
 
         if(nfcAdapter == null){
-            Toast.makeText(this, "The app requires NFC to perform that action",
-                    Toast.LENGTH_LONG).show();
+            showToast("This application requires NFC", "long");
         }
 
         else if(!nfcAdapter.isEnabled()){
@@ -265,8 +263,8 @@ public class RunActivity extends AppCompatActivity {
         String name = checkpoint.getName();
         if(exists) {
             Log.d(TAG, name);
-            Toast.makeText(this, "Tag " + name + " has been scanned",
-                    Toast.LENGTH_SHORT).show();
+
+            showToast("Tag "+ name+ " has been scanned", "short");
 
             if (remCheck > 0) {
                 remCheck--;
@@ -291,8 +289,7 @@ public class RunActivity extends AppCompatActivity {
                 createFinishedDialogWindow(time);
             }
         } else{
-            Toast.makeText(this, "This tag is not part of the map",
-                    Toast.LENGTH_SHORT).show();
+            showToast("This tag is not part of the map", "long");
         }
     }
 
@@ -431,5 +428,18 @@ public class RunActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    private void showToast(String message, String length){
+        Toast toast;
+        if(length.equals("long")){
+            toast = Toast.makeText(this, message,
+                    Toast.LENGTH_LONG);
+        }else{
+            toast = Toast.makeText(this, message,
+                    Toast.LENGTH_SHORT);
+        }
+        toast.setGravity(Gravity.BOTTOM, 0, 300);
+        toast.show();
     }
 }
