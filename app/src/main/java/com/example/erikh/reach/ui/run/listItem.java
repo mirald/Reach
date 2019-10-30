@@ -1,6 +1,7 @@
 package com.example.erikh.reach.ui.run;
 
 import android.content.Context;
+import android.util.Log;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.erikh.reach.CheckpointDatabase;
+import com.example.erikh.reach.MainActivity;
 import com.example.erikh.reach.R;
 import com.example.erikh.reach.Run;
 
@@ -36,11 +39,30 @@ public class listItem extends ArrayAdapter<Run> {
         TextView estimatedTime = (TextView) convertView.findViewById(R.id.estimatedTimeId);
         TextView location = (TextView) convertView.findViewById(R.id.locationId);
         TextView checkpointNumber = (TextView) convertView.findViewById(R.id.checkpointsId);
+        TextView closestCheckpoint = (TextView) convertView.findViewById(R.id.closestId);
+        TextView textCheckpoint = (TextView) convertView.findViewById(R.id.closest);
+
+        textCheckpoint.setVisibility(View.INVISIBLE);
+
         ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
+        
         name.setText(run.getName());
         estimatedTime.setText(run.getEstimateAsString());
         location.setText(run.getLocation());
         checkpointNumber.setText(run.getNumberOfCheckpoints() + "");
+
+        float[] tempArr = new float[]{MainActivity.xcord, MainActivity.ycord};
+
+        if(MainActivity.locationAccepted == true){
+            closestCheckpoint.setText(CheckpointDatabase.getCheckpointDatabase().getClosestCheckpoint(tempArr, run).getName());
+            textCheckpoint.setVisibility(View.VISIBLE);
+        }
+
+
+
+
+        Log.d("Hejhoj", "getView: ");
+
         //Gets the pic name
         String picPath = run.GetPicPath();
         Context context = parent.getContext();
@@ -48,6 +70,7 @@ public class listItem extends ArrayAdapter<Run> {
         image.setImageResource(id);
 
         //image.setImageDrawable(Drawable.createFromPath());
+
 
 
         return convertView;
