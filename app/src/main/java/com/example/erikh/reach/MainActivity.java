@@ -113,8 +113,15 @@ public class MainActivity extends AppCompatActivity  {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
 
+        if(locationAccepted){
+            checkLocation();
+        }
 
 
     }
@@ -137,63 +144,41 @@ public class MainActivity extends AppCompatActivity  {
 
         Log.d("fel", "DSOOSDODPASOASDPOPASOAS " + locationAccepted);
 
-        if(locationAccepted == true){
+        if(locationAccepted){
 
-
-            client = LocationServices.getFusedLocationProviderClient(this);
-
-
-
-
-
-        /*
-
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-
-            Log.d("fel", "fel");
-
-
-            return;
+            checkLocation();
 
         }
 
 
-         */
 
 
 
+    }
+
+    private void checkLocation(){
+        client = LocationServices.getFusedLocationProviderClient(this);
 
 
+        client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
 
 
-
-            client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-
-
-                    if(location != null){
-                        String startstring = location.toString();
-                        startstring = startstring.replace('.', ',');
-                        String[] splitstring = startstring.split(" ");
-                        String cords = splitstring[1];
-                        cords.split(",");
-                        String xcordString =cords.split(",")[0] + "." + cords.split(",")[1];
-                        String ycordString =cords.split(",")[2] + "." + cords.split(",")[3];
-                        xcord = Float.parseFloat(xcordString);
-                        ycord = Float.parseFloat(ycordString);
-                    }
-
+                if(location != null){
+                    String startstring = location.toString();
+                    startstring = startstring.replace('.', ',');
+                    String[] splitstring = startstring.split(" ");
+                    String cords = splitstring[1];
+                    cords.split(",");
+                    String xcordString =cords.split(",")[0] + "." + cords.split(",")[1];
+                    String ycordString =cords.split(",")[2] + "." + cords.split(",")[3];
+                    xcord = Float.parseFloat(xcordString);
+                    ycord = Float.parseFloat(ycordString);
                 }
-            });
-
-        }
-
-
-
-
-
+                RunFragment.runs.notifyDataSetChanged();
+            }
+        });
     }
 
 
