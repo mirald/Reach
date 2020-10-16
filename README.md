@@ -1,5 +1,9 @@
 Reach - a cityteering application to make your runs more fun!
 
+<img src="/Screenshots/Screenshot_20191030-145842.jpg" width="300"> <img src="/Screenshots/Screenshot_20191030-145847.jpg" width="300">
+
+<img src="/Screenshots/Screenshot_20191030-145914.jpg" width="300"> <img src="/Screenshots/Screenshot_20191030-150014.jpg" width="300">
+
 To make the code work, you need to have a Mapquest API Key, and declare it in your global gradle.properties file as such:
 
 1. Locate the .gradle directory
